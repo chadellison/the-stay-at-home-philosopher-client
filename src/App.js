@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import logo from './logo.svg'
 import './App.css'
 import Nav from './components/Nav.js'
 import LoginForm from './components/LoginForm.js'
@@ -7,6 +6,8 @@ import Hosts from "./config/Hosts.js"
 import LoginService from './services/LoginService.js'
 import SignUpService from './services/SignUpService.js'
 import SignUpForm from "./components/SignUpForm.js"
+import Header from './components/Header.js'
+import Intro from './components/Intro.js'
 
 class App extends Component {
   constructor(props) {
@@ -188,10 +189,7 @@ class App extends Component {
 
     return (
       <div className="App">
-        <div className={"App-header" + opacity}>
-          <img src={logo} className="App-logo" alt="logo" />
-          <h2>The Stay at Home Philosopher</h2>
-        </div>
+        <Header opacity={opacity} />
         <Nav handleLoginForm={this.handleLoginForm}
           handleSignUpForm={this.handleSignUpForm}
           signUpFormActive={this.state.signUpFormActive}
@@ -200,9 +198,7 @@ class App extends Component {
         />
         {loginForm}
         {signUpForm}
-        <p className={"App-intro" + opacity}>
-          Browse and contribute to posts!
-        </p>
+        <Intro opacity={opacity} />
       </div>
     )
   }
