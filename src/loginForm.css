@@ -37,6 +37,7 @@
 .signUp:hover {
   background-color: #1155c1;
   transition: background-color 0.3s;
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
 }
 
 .signUp:active {
@@ -66,6 +67,7 @@
 .submit:hover {
   background-color: #ff9d00;
   transition: background-color 0.3s;
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
 }
 
 .cancelLoginMenu {
@@ -84,6 +86,7 @@
 .cancelLoginMenu:hover {
   background-color: #ff6e26;
   transition: background-color 0.3s;
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
 }
 
 .cancelLoginMenu:active {
