@@ -1,6 +1,7 @@
 import React, { Component } from "react"
 import "../nav.css"
 import LoginStatus from './LoginStatus.js'
+import SignUpStatus from './SignUpStatus.js'
 
 export default class Nav extends Component {
   render() {
@@ -8,7 +9,7 @@ export default class Nav extends Component {
       <div className="nav">
         <div className="login-signup-signout">
           <LoginStatus handleLoginForm={this.props.handleLoginForm} />
-          <div className="signup">Sign Up</div>
+          <SignUpStatus handleSignUpForm={this.props.handleSignUpForm} />
         </div>
       </div>
     )

@@ -1,0 +1,47 @@
+.signUpSubmit {
+  margin-bottom: 20px;
+  margin-top: 20px;
+  height: 30px;
+  border-radius: 0px;
+  border: none;
+  width: 80%;
+  background-color: #4286f4;
+  color: white;
+  font-size: 15px;
+  outline: none;
+  transition: all ease 0.3s;
+}
+
+.signUpSubmit:hover {
+  background-color: #1155c1;
+  transition: background-color 0.3s;
+}
+
+.signUpSubmit:active {
+  margin-top: 22px;
+  margin-bottom: 18px;
+}
+
+.cancelSignUpMenu {
+  margin-bottom: 20px;
+  height: 30px;
+  border-radius: 0px;
+  border: none;
+  width: 80%;
+  background-color: #ed4b1e;
+  color: white;
+  font-size: 15px;
+  transition: background-color 0.3s;
+  outline: none;
+}
+
+.cancelSignUpMenu:hover {
+  background-color: #ff6e26;
+  transition: background-color 0.3s;
+}
+
+.cancelSignUpMenu:active {
+  outline: none;
+  margin-top: 2px;
+  margin-bottom: 18px;
+}

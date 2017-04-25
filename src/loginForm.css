@@ -85,3 +85,9 @@
   background-color: #ff6e26;
   transition: background-color 0.3s;
 }
+
+.cancelLoginMenu:active {
+  outline: none;
+  margin-top: 2px;
+  margin-bottom: 18px;
+}
