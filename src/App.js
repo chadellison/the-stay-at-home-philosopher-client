@@ -194,6 +194,8 @@ class App extends Component {
         </div>
         <Nav handleLoginForm={this.handleLoginForm}
           handleSignUpForm={this.handleSignUpForm}
+          signUpFormActive={this.state.signUpFormActive}
+          loginFormActive={this.state.loginFormActive}
           className={opacity}
         />
         {loginForm}
