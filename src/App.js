@@ -163,6 +163,7 @@ class App extends Component {
     let loginForm = ''
     let signUpForm = ''
     let opacity = ''
+    let intro = <Intro opacity={opacity} />
 
     if(this.state.loginFormActive) {
       loginForm = <LoginForm
@@ -172,7 +173,8 @@ class App extends Component {
         handleSignUpForm={this.handleSignUpForm}
         handleLoginCancel={this.handleCancel}
       />
-      opacity = " opaque"
+      opacity = ' opaque'
+      intro = ''
     }
 
     if(this.state.signUpFormActive) {
@@ -184,7 +186,8 @@ class App extends Component {
         handleSignUp={this.handleSignUp}
         handleCancel={this.handleCancel}
       />
-      opacity = " opaque"
+      opacity = ' opaque'
+      intro = ''
     }
 
     return (
@@ -198,7 +201,7 @@ class App extends Component {
         />
         {loginForm}
         {signUpForm}
-        <Intro opacity={opacity} />
+        {intro}
       </div>
     )
   }
