@@ -1,0 +1,12 @@
+.loginStatus {
+  display: inline-block;
+  margin: 10px;
+  margin-top: 45px;
+  padding-bottom: 5px;
+}
+
+.loginStatus:hover {
+  border-bottom: 3px solid #c62700;
+  cursor: pointer;
+  color: #c62700;
+}
