@@ -16,8 +16,8 @@ export default class Post extends Component {
     return (
       <div className="post">
         <div className="postTitle"><strong>Title:</strong> {this.props.title}</div>
-        <div className="postBody">{this.displayText(this.props.body)}</div>
         <div className="postAuthor"><strong>Author:</strong> {this.props.author}</div>
+        <div className="postBody">{this.displayText(this.props.body)}</div>
       </div>
     )
   }

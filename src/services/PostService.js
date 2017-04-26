@@ -12,6 +12,24 @@ class PostService {
       })
     )
   }
+
+  addPost(title, body, token) {
+    return(
+      fetch(API_HOST + "/api/v1/posts?" + "token=" + token, {
+        method: "POST",
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          post: {
+            title: title,
+            body: body
+          }
+        })
+      })
+    )
+  }
 }
 
 export default new PostService

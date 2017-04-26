@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import Post from './Post.js'
 import "../styles/posts.css"
 
-export default class Posts extends Component {  
+export default class Posts extends Component {
   render() {
     return (
       <div className={"posts" + this.props.opacity}>
