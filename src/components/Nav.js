@@ -1,5 +1,5 @@
 import React, { Component } from "react"
-import "../nav.css"
+import "../styles/nav.css"
 import LoginStatus from './LoginStatus.js'
 import SignUpStatus from './SignUpStatus.js'
 
@@ -14,7 +14,7 @@ export default class Nav extends Component {
     }
 
     return(
-      <div className="nav">
+      <div className={"nav" + this.props.opacity}>
         <div className="login-signup-signout">
           {loginStatus}
           {signUpStatus}

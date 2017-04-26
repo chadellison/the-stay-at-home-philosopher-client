@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import './App.css'
+import './styles/App.css'
 import Nav from './components/Nav.js'
 import LoginForm from './components/LoginForm.js'
 import LoginService from './services/LoginService.js'
@@ -7,6 +7,7 @@ import SignUpService from './services/SignUpService.js'
 import SignUpForm from "./components/SignUpForm.js"
 import Header from './components/Header.js'
 import Intro from './components/Intro.js'
+import Message from './components/Message.js'
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 
 class App extends Component {
@@ -18,6 +19,7 @@ class App extends Component {
     this.handleSignUp      = this.handleSignUp.bind(this)
     this.handleSignUpForm  = this.handleSignUpForm.bind(this)
     this.handleCancel      = this.handleCancel.bind(this)
+    this.closeNotification = this.closeNotification.bind(this)
     this.state = {
       loginFormActive: false,
       signUpFormActive: false,
@@ -26,7 +28,10 @@ class App extends Component {
       email: '',
       password: '',
       aboutMe: '',
-      messageNotification: ''
+      messageNotification: '',
+      notificationActive: false,
+      loggedIn: false,
+      token: ''
     }
   }
 
@@ -46,17 +51,20 @@ class App extends Component {
     .then((response) => {
       if (response.status[0] !== 5) {
         return response.json()
+      } else {
+        throw "The server responded with an error."
       }
     })
     .then((responseJson) => {
       if(responseJson.errors) {
-        alert(responseJson.errors)
         this.setState({
+          notificationActive: true,
           messageNotification: responseJson.errors
         })
       } else {
         this.setState({
           signUpFormActive: false,
+          notificationActive: true,
           messageNotification: "Your account has been created! Login to get started."
         })
       }
@@ -72,20 +80,20 @@ class App extends Component {
       if (response.status[0] !== 5) {
         return response.json()
       } else {
-        throw "Something went wrong. The server responded with a 500"
+        throw "The server responded with an error."
       }
     })
     .then((responseJson) => {
       if(responseJson.errors) {
         this.setState({
+          notificationActive: true,
           messageNotification: responseJson.errors
         })
       } else {
         this.setState({
-          token: responseJson.password_digest,
+          token: responseJson.encrypted_password,
           loggedIn: true,
-          loginFormActive: false,
-          messageNotification: ''
+          loginFormActive: false
         })
       }
     })
@@ -155,6 +163,22 @@ class App extends Component {
     }
   }
 
+  returnMessage() {
+    if(this.state.notificationActive) {
+      return(
+        <Message messageNotification={this.state.messageNotification}
+          closeNotification={this.closeNotification}
+        />
+      )
+    }
+  }
+
+  closeNotification() {
+    this.setState({
+      notificationActive: false
+    })
+  }
+
   render() {
     let loginForm = ''
     let signUpForm = ''
@@ -194,8 +218,10 @@ class App extends Component {
           handleSignUpForm={this.handleSignUpForm}
           signUpFormActive={this.state.signUpFormActive}
           loginFormActive={this.state.loginFormActive}
-          className={opacity}
+          opacity={opacity}
         />
+
+        {this.returnMessage()}
 
         <ReactCSSTransitionGroup
           transitionName="loginFade"
