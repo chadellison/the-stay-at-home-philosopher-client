@@ -1,10 +1,9 @@
-import Hosts from "../config/Hosts.js"
+import API_HOST from "../config/apiHost.js"
 
-export default class LoginService {
+class LoginService {
   sendLoginCredentials(email, password) {
-    let host = new Hosts
     return(
-      fetch(host.apiHost() + "/api/v1/authentication", {
+      fetch(API_HOST + "/api/v1/authentication", {
         method: "POST",
         headers: {
           'Accept': 'application/json',
@@ -20,3 +19,5 @@ export default class LoginService {
     )
   }
 }
+
+export default new LoginService

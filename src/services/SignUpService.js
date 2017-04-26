@@ -1,10 +1,9 @@
-import Hosts from "../config/Hosts.js"
+import API_HOST from "../config/apiHost.js"
 
-export default class SignUpService {
-  sendSignUpCredentials(firstName, lastName, email, password) {
-    let host = new Hosts
+class SignUpService {
+  sendSignUpCredentials(firstName, lastName, email, password, about_me) {
     return(
-      fetch(host.apiHost() + "/api/v1/users", {
+      fetch(API_HOST + "/api/v1/users", {
         method: "POST",
         headers: {
           'Accept': 'application/json',
@@ -15,10 +14,13 @@ export default class SignUpService {
             first_name: firstName,
             last_name: lastName,
             email: email,
-            password: password
+            password: password,
+            about_me: about_me
           }
         })
       })
     )
   }
 }
+
+export default new SignUpService

@@ -2,12 +2,12 @@ import React, { Component } from 'react'
 import './App.css'
 import Nav from './components/Nav.js'
 import LoginForm from './components/LoginForm.js'
-import Hosts from "./config/Hosts.js"
 import LoginService from './services/LoginService.js'
 import SignUpService from './services/SignUpService.js'
 import SignUpForm from "./components/SignUpForm.js"
 import Header from './components/Header.js'
 import Intro from './components/Intro.js'
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 
 class App extends Component {
   constructor(props) {
@@ -21,10 +21,12 @@ class App extends Component {
     this.state = {
       loginFormActive: false,
       signUpFormActive: false,
-      firstName: "",
-      lastName: "",
-      email: "",
-      password: ""
+      firstName: '',
+      lastName: '',
+      email: '',
+      password: '',
+      aboutMe: '',
+      messageNotification: ''
     }
   }
 
@@ -36,53 +38,36 @@ class App extends Component {
   }
 
   handleSignUp() {
-    let signUpService = new SignUpService
-    signUpService.sendSignUpCredentials(this.state.firstName,
+    SignUpService.sendSignUpCredentials(this.state.firstName,
                                         this.state.lastName,
                                         this.state.email,
-                                        this.state.password)
+                                        this.state.password,
+                                        this.state.aboutMe)
     .then((response) => {
       if (response.status[0] !== 5) {
         return response.json()
-      } else {
-        throw "Invalid Entry"
       }
     })
     .then((responseJson) => {
       if(responseJson.errors) {
-        let errors = responseJson.errors
-        let message = ""
-        if(errors.password) {
-          message += "Password " + errors.password + " "
-        }
-        if(errors.email) {
-          message += "Email " + errors.email + " "
-        }
-        if(errors.first_name) {
-          message += "First name " + errors.first_name + " "
-        }
-        if(errors.last_name) {
-          message += "Last name " + errors.last_name
-        }
-
+        alert(responseJson.errors)
         this.setState({
-          messageNotification: message
+          messageNotification: responseJson.errors
         })
       } else {
         this.setState({
           signUpFormActive: false,
-          messageNotification: "An email to confirm your account has been sent"
+          messageNotification: "Your account has been created! Login to get started."
         })
       }
     })
     .catch((error) => {
-      alert(error);
+      alert(error)
     })
   }
 
   handleLogin() {
-    let loginService = new LoginService
-    loginService.sendLoginCredentials(this.state.email, this.state.password)
+    LoginService.sendLoginCredentials(this.state.email, this.state.password)
     .then((response) => {
       if (response.status[0] !== 5) {
         return response.json()
@@ -100,7 +85,7 @@ class App extends Component {
           token: responseJson.password_digest,
           loggedIn: true,
           loginFormActive: false,
-          messageNotification: ""
+          messageNotification: ''
         })
       }
     })
@@ -133,6 +118,11 @@ class App extends Component {
   handleInput(e) {
     let value = e.currentTarget.value
     let field = e.currentTarget.className
+//     const formProp = FORM_FIELDS[field]
+// i    this.setState({[formProp]: value})
+//     const FORM_FIELDS = {
+//       "credentialFirstName": 'firstName'
+//     }
 
     if(field === "credentialFirstName") {
       this.setState({
@@ -157,6 +147,12 @@ class App extends Component {
         password: value
       })
     }
+
+    if(field === "credentialDescription") {
+      this.setState({
+        aboutMe: value
+      })
+    }
   }
 
   render() {
@@ -177,18 +173,19 @@ class App extends Component {
       intro = ''
     }
 
-    if(this.state.signUpFormActive) {
+    this.state.signUpFormActive && (
       signUpForm = <SignUpForm
         handleFirstName={this.handleInput}
         handleLastName={this.handleInput}
         handleEmail={this.handleInput}
         handlePassword={this.handleInput}
+        handleAboutMe={this.handleInput}
         handleSignUp={this.handleSignUp}
         handleCancel={this.handleCancel}
-      />
-      opacity = ' opaque'
+      />,
+      opacity = ' opaque',
       intro = ''
-    }
+    )
 
     return (
       <div className="App">
@@ -199,8 +196,26 @@ class App extends Component {
           loginFormActive={this.state.loginFormActive}
           className={opacity}
         />
-        {loginForm}
-        {signUpForm}
+
+        <ReactCSSTransitionGroup
+          transitionName="loginFade"
+          transitionEnter={true}
+          transitionLeave={true}
+          transitionEnterTimeout={700}
+          transitionLeaveTimeout={700}
+        >
+          {loginForm}
+        </ReactCSSTransitionGroup>
+
+        <ReactCSSTransitionGroup
+          transitionName="loginFade"
+          transitionEnter={true}
+          transitionLeave={true}
+          transitionEnterTimeout={700}
+          transitionLeaveTimeout={700}
+        >
+          {signUpForm}
+        </ReactCSSTransitionGroup>
         {intro}
       </div>
     )
