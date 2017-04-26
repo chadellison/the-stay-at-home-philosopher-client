@@ -5,7 +5,9 @@ import LoginForm from './components/LoginForm.js'
 import LoginService from './services/LoginService.js'
 import SignUpService from './services/SignUpService.js'
 import PostService from './services/PostService.js'
-import SignUpForm from "./components/SignUpForm.js"
+import SignUpForm from './components/SignUpForm.js'
+import AddPost from './components/AddPost.js'
+import AddPostForm from './components/AddPostForm.js'
 import Header from './components/Header.js'
 import Intro from './components/Intro.js'
 import Message from './components/Message.js'
@@ -19,17 +21,22 @@ class App extends Component {
     this.handleInput       = this.handleInput.bind(this)
     this.handleLogin       = this.handleLogin.bind(this)
     this.handleSignUp      = this.handleSignUp.bind(this)
+    this.handleSubmitPost  = this.handleSubmitPost.bind(this)
     this.handleSignUpForm  = this.handleSignUpForm.bind(this)
+    this.handleAddPostForm = this.handleAddPostForm.bind(this)
     this.handleCancel      = this.handleCancel.bind(this)
     this.closeNotification = this.closeNotification.bind(this)
     this.state = {
       loginFormActive: false,
       signUpFormActive: false,
+      addPostFormActive: false,
       firstName: '',
       lastName: '',
       email: '',
       password: '',
       aboutMe: '',
+      title: '',
+      body: '',
       messageNotification: '',
       notificationActive: false,
       loggedIn: false,
@@ -86,15 +93,17 @@ class App extends Component {
       }
     })
     .then((responseJson) => {
+      this.setState({
+        notificationActive: true
+      })
+
       if(responseJson.errors) {
         this.setState({
-          notificationActive: true,
           messageNotification: responseJson.errors
         })
       } else {
         this.setState({
           signUpFormActive: false,
-          notificationActive: true,
           messageNotification: "Your account has been created! Login to get started.",
           password: ''
         })
@@ -133,7 +142,46 @@ class App extends Component {
       }
     })
     .catch((error) => {
-      alert(error);
+      this.setState({
+        notificationActive: true,
+        messageNotification: error
+      })
+    })
+  }
+
+  handleSubmitPost() {
+    PostService.addPost(this.state.title, this.state.body, this.state.token)
+    .then((response) => {
+      if (response.status[0] !== 5) {
+        return response.json()
+      } else {
+        throw "The server responded with an error."
+      }
+    })
+    .then((responseJson) => {
+      this.setState({
+        notificationActive: true
+      })
+
+      if(responseJson.errors) {
+        this.setState({
+          messageNotification: responseJson.errors
+        })
+      } else {
+        let newPosts = this.state.posts
+        newPosts.unshift(responseJson)
+        this.setState({
+          posts: newPosts,
+          messageNotification: 'Your post has been added!',
+          addPostFormActive: false
+        })
+      }
+    })
+    .catch((error) => {
+      this.setState({
+        notificationActive: true,
+        messageNotification: error
+      })
     })
   }
 
@@ -144,16 +192,25 @@ class App extends Component {
     })
   }
 
+  handleAddPostForm() {
+    this.setState({
+      addPostFormActive: true
+    })
+  }
+
   handleCancel(e) {
     let field = e.currentTarget.className
-    if(field === "cancelLoginMenu" || field === "cancelSignUpMenu") {
+    if(["cancelLoginMenu", "cancelSignUpMenu", "cancelAddPost"].includes(field)) {
       this.setState({
         loginFormActive: false,
         signUpFormActive: false,
-        firstName: "",
-        lastName: "",
-        email: "",
-        password: ""
+        addPostFormActive: false,
+        firstName: '',
+        lastName: '',
+        email: '',
+        password: '',
+        title: '',
+        body: ''
       })
     }
   }
@@ -196,6 +253,18 @@ class App extends Component {
         aboutMe: value
       })
     }
+
+    if(field === "addPostTitle") {
+      this.setState({
+        title: value
+      })
+    }
+
+    if(field === "addPostBody") {
+      this.setState({
+        body: value
+      })
+    }
   }
 
   returnMessage() {
@@ -205,6 +274,8 @@ class App extends Component {
           closeNotification={this.closeNotification}
         />
       )
+    } else {
+      return null
     }
   }
 
@@ -225,6 +296,8 @@ class App extends Component {
           handleLoginCancel={this.handleCancel}
         />
       )
+    } else {
+      return null
     }
   }
 
@@ -241,12 +314,41 @@ class App extends Component {
           handleCancel={this.handleCancel}
         />
       )
+    } else {
+      return null
+    }
+  }
+
+  returnAddPostForm() {
+    if(this.state.addPostFormActive) {
+      return(
+        <AddPostForm
+          handleTitle={this.handleInput}
+          handleBody={this.handleInput}
+          handleSubmitPost={this.handleSubmitPost}
+          handleCancel={this.handleCancel}
+        />
+      )
+    } else {
+      return null
     }
   }
 
   returnIntro(opacity) {
     if(!this.state.loginFormActive && !this.state.signUpFormActive) {
       return(<Intro opacity={opacity} />)
+    } else {
+      return null
+    }
+  }
+
+  returnAddPost(opacity) {
+    if(this.state.loggedIn && !this.state.addPostFormActive) {
+      return(
+        <AddPost opacity={opacity} handleAddPostForm={this.handleAddPostForm} />
+      )
+    } else {
+      return null
     }
   }
 
@@ -286,9 +388,23 @@ class App extends Component {
           {this.returnSignUpForm()}
         </ReactCSSTransitionGroup>
 
+        <ReactCSSTransitionGroup
+          transitionName="loginFade"
+          transitionEnterTimeout={700}
+          transitionLeaveTimeout={700}
+        >
+          {this.returnAddPostForm()}
+        </ReactCSSTransitionGroup>
+
         {this.returnIntro(opacity)}
 
-        <Posts posts={this.state.posts} opacity={opacity} />
+        {this.returnAddPost(opacity)}
+
+        <Posts
+          posts={this.state.posts}
+          opacity={opacity}
+          loggedIn={this.state.loggedIn}
+        />
       </div>
     )
   }
