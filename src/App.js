@@ -4,10 +4,12 @@ import Nav from './components/Nav.js'
 import LoginForm from './components/LoginForm.js'
 import LoginService from './services/LoginService.js'
 import SignUpService from './services/SignUpService.js'
+import PostService from './services/PostService.js'
 import SignUpForm from "./components/SignUpForm.js"
 import Header from './components/Header.js'
 import Intro from './components/Intro.js'
 import Message from './components/Message.js'
+import Posts from './components/Posts.js'
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 
 class App extends Component {
@@ -31,8 +33,36 @@ class App extends Component {
       messageNotification: '',
       notificationActive: false,
       loggedIn: false,
-      token: ''
+      token: '',
+      posts: []
     }
+  }
+
+  componentWillMount() {
+    this.fetchPosts()
+  }
+
+  fetchPosts(params={}) {
+    // adjust params here or in post service
+    PostService.fetchPosts(params)
+    .then((response) => {
+      if(response.status[0] !== 5) {
+        return response.json()
+      } else {
+        throw "The server responded with an error."
+      }
+    })
+    .then((responseJson) => {
+      this.setState({
+        posts: responseJson.data
+      })
+    })
+    .catch((error) => {
+      this.setState({
+        notificationActive: true,
+        messageNotification: error
+      })
+    })
   }
 
   handleSignUpForm() {
@@ -49,7 +79,7 @@ class App extends Component {
                                         this.state.password,
                                         this.state.aboutMe)
     .then((response) => {
-      if (response.status[0] !== 5) {
+      if(response.status[0] !== 5) {
         return response.json()
       } else {
         throw "The server responded with an error."
@@ -65,12 +95,16 @@ class App extends Component {
         this.setState({
           signUpFormActive: false,
           notificationActive: true,
-          messageNotification: "Your account has been created! Login to get started."
+          messageNotification: "Your account has been created! Login to get started.",
+          password: ''
         })
       }
     })
     .catch((error) => {
-      alert(error)
+      this.setState({
+        notificationActive: true,
+        messageNotification: error
+      })
     })
   }
 
@@ -93,7 +127,8 @@ class App extends Component {
         this.setState({
           token: responseJson.encrypted_password,
           loggedIn: true,
-          loginFormActive: false
+          loginFormActive: false,
+          password: ''
         })
       }
     })
@@ -252,6 +287,8 @@ class App extends Component {
         </ReactCSSTransitionGroup>
 
         {this.returnIntro(opacity)}
+
+        <Posts posts={this.state.posts} opacity={opacity} />
       </div>
     )
   }

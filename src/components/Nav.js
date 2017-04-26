@@ -16,8 +16,8 @@ export default class Nav extends Component {
     return(
       <div className={"nav" + this.props.opacity}>
         <div className="login-signup-signout">
-          {loginStatus}
           {signUpStatus}
+          {loginStatus}
         </div>
       </div>
     )
