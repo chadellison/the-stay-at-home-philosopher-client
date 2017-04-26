@@ -8,7 +8,7 @@ export default class Nav extends Component {
     let signUpStatus = <LoginStatus handleLoginForm={this.props.handleLoginForm} />
     let loginStatus = <SignUpStatus handleSignUpForm={this.props.handleSignUpForm} />
 
-    if(this.props.loginFormActive || this.props.signUpFormActive) {
+    if(this.props.loginFormActive || this.props.signUpFormActive || this.props.loggedIn) {
       signUpStatus = ''
       loginStatus = ''
     }

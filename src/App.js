@@ -179,37 +179,48 @@ class App extends Component {
     })
   }
 
-  render() {
-    let loginForm = ''
-    let signUpForm = ''
-    let opacity = ''
-    let intro = <Intro opacity={opacity} />
-
+  returnLoginForm() {
     if(this.state.loginFormActive) {
-      loginForm = <LoginForm
-        handleEmail={this.handleInput}
-        handlePassword={this.handleInput}
-        handleLogin={this.handleLogin}
-        handleSignUpForm={this.handleSignUpForm}
-        handleLoginCancel={this.handleCancel}
-      />
-      opacity = ' opaque'
-      intro = ''
+      return(
+        <LoginForm
+          handleEmail={this.handleInput}
+          handlePassword={this.handleInput}
+          handleLogin={this.handleLogin}
+          handleSignUpForm={this.handleSignUpForm}
+          handleLoginCancel={this.handleCancel}
+        />
+      )
     }
+  }
 
-    this.state.signUpFormActive && (
-      signUpForm = <SignUpForm
-        handleFirstName={this.handleInput}
-        handleLastName={this.handleInput}
-        handleEmail={this.handleInput}
-        handlePassword={this.handleInput}
-        handleAboutMe={this.handleInput}
-        handleSignUp={this.handleSignUp}
-        handleCancel={this.handleCancel}
-      />,
-      opacity = ' opaque',
-      intro = ''
-    )
+  returnSignUpForm() {
+    if(this.state.signUpFormActive) {
+      return(
+        <SignUpForm
+          handleFirstName={this.handleInput}
+          handleLastName={this.handleInput}
+          handleEmail={this.handleInput}
+          handlePassword={this.handleInput}
+          handleAboutMe={this.handleInput}
+          handleSignUp={this.handleSignUp}
+          handleCancel={this.handleCancel}
+        />
+      )
+    }
+  }
+
+  returnIntro(opacity) {
+    if(!this.state.loginFormActive && !this.state.signUpFormActive) {
+      return(<Intro opacity={opacity} />)
+    }
+  }
+
+  render() {
+    let opacity = ''
+
+    if(this.state.loginFormActive || this.state.signUpFormActive) {
+      opacity = ' opaque'
+    }
 
     return (
       <div className="App">
@@ -218,6 +229,7 @@ class App extends Component {
           handleSignUpForm={this.handleSignUpForm}
           signUpFormActive={this.state.signUpFormActive}
           loginFormActive={this.state.loginFormActive}
+          loggedIn={this.state.loggedIn}
           opacity={opacity}
         />
 
@@ -225,24 +237,21 @@ class App extends Component {
 
         <ReactCSSTransitionGroup
           transitionName="loginFade"
-          transitionEnter={true}
-          transitionLeave={true}
           transitionEnterTimeout={700}
           transitionLeaveTimeout={700}
         >
-          {loginForm}
+          {this.returnLoginForm()}
         </ReactCSSTransitionGroup>
 
         <ReactCSSTransitionGroup
           transitionName="loginFade"
-          transitionEnter={true}
-          transitionLeave={true}
           transitionEnterTimeout={700}
           transitionLeaveTimeout={700}
         >
-          {signUpForm}
+          {this.returnSignUpForm()}
         </ReactCSSTransitionGroup>
-        {intro}
+
+        {this.returnIntro(opacity)}
       </div>
     )
   }
