@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import "../styles/postShow.css"
 import AllPostsButton from './AllPostsButton.js'
+import CommentButton from './CommentButton.js'
 
 export default class PostShow extends Component {
   render() {
@@ -14,6 +15,7 @@ export default class PostShow extends Component {
         <div className={'postShowAuthor'}>
           Author: {this.props.post.relationships.author}
         </div>
+        <CommentButton />
       </div>
     )
   }
