@@ -22,6 +22,7 @@ export default class PostShow extends Component {
           handleCancel={this.props.handleCancel}
           loggedIn={this.props.loggedIn}
           handleCommentBody={this.props.handleCommentBody}
+          handleSubmitComment={this.props.handleSubmitComment}
         />
       </div>
     )

@@ -6,7 +6,8 @@ export default class SingleComment extends Component {
     return (
       <div className="comment">
         <div className="commentBody">{this.props.body}</div>
-        <div className="commentAuthor">-{this.props.author}</div>
+        <div className="commentAuthor">- {this.props.author}</div>
+        <div className="commentDate">Published: {this.props.date}</div>
       </div>
     )
   }

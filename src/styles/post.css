@@ -22,7 +22,7 @@
    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
 }
 
-.postTitle, .postBody, .postAuthor {
+.postTitle, .postBody, .postAuthor, .postDate {
   padding: 5px;
 }
 
@@ -39,4 +39,9 @@
 .postAuthor:hover {
   cursor: pointer;
   transition: 0.3s;
+}
+
+.postDate {
+  text-align: left;
+  font-size: 12px;
 }

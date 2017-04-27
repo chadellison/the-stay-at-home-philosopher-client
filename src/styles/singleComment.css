@@ -1,6 +1,7 @@
 .comment {
-  background-color: #bec7d6;
+  background-color: #e8eaed;
   padding: 50px;
+  margin-bottom: 10px;
 }
 
 .commentBody {
@@ -10,4 +11,11 @@
 
 .commentAuthor {
   text-align: left;
+}
+
+.commentDate {
+  margin-top: 10px;
+  text-align: left;
+  font-size: 12px;
+  font-style: italic;
 }
