@@ -27,7 +27,7 @@ class PostService {
 
   addPost(title, body, token) {
     return(
-      fetch(API_HOST + '/api/v1/posts?' + 'token=' + token, {
+      fetch(API_HOST + '/api/v1/posts?', {
         method: 'POST',
         headers: {
           'Accept': 'application/json',
@@ -37,7 +37,8 @@ class PostService {
           post: {
             title: title,
             body: body
-          }
+          },
+          token: token
         })
       })
     )

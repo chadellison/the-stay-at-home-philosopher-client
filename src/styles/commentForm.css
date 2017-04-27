@@ -1,0 +1,61 @@
+.commentForm {
+  padding: 10px;
+  transition: 0.3s;
+  margin-bottom: 50px;
+}
+
+.commentFormBody {
+  width: 800px;
+  height: 100px;
+  padding: 5px;
+  font-size: 15px;
+  outline: none;
+}
+
+.commentFormButtonContainer {
+  margin: 20px;
+}
+
+.commentFormSubmit {
+  border: none;
+  background-color: #b70000;
+  color: white;
+  font-size: 15px;
+  outline: none;
+  transition: background-color 0.3s;
+  height: 30px;
+  margin-right: 30px;
+  width: 75px;
+}
+
+.commentFormSubmit:active {
+
+}
+
+.commentFormSubmit:hover {
+  background-color: #f20000;
+  transition: background-color 0.3s;
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+}
+
+.cancelCommentForm {
+  margin-left: 30px;
+  height: 30px;
+  width: 75px;
+  border-radius: 0px;
+  border: none;
+  background-color: #4286f4;
+  color: white;
+  font-size: 15px;
+  transition: background-color 0.3s;
+  outline: none;
+}
+
+.cancelCommentForm:hover {
+  background-color: #1155c1;
+  transition: background-color 0.3s;
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+}
+
+.cancelCommentForm:active {
+}

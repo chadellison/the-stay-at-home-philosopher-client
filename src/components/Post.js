@@ -21,6 +21,7 @@ export default class Post extends Component {
         <div className="postAuthor">
           <strong>Author:</strong> {this.props.author}
         </div>
+        <div className="postDate">Published: {this.props.date}</div>
         <div className="postBody" id={this.props.id} onClick={this.props.fetchPost}>
           {this.displayText(this.props.body)}
         </div>

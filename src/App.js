@@ -5,6 +5,7 @@ import LoginForm from './components/LoginForm.js'
 import LoginService from './services/LoginService.js'
 import SignUpService from './services/SignUpService.js'
 import PostService from './services/PostService.js'
+import CommentService from './services/CommentService.js'
 import SignUpForm from './components/SignUpForm.js'
 import AddPost from './components/AddPost.js'
 import AddPostForm from './components/AddPostForm.js'
@@ -18,16 +19,21 @@ import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 class App extends Component {
   constructor(props) {
     super(props)
+    // api requests
+    this.fetchPost            = this.fetchPost.bind(this)
+    this.handleSubmitPost     = this.handleSubmitPost.bind(this)
+    this.handleSubmitComment  = this.handleSubmitComment.bind(this)
+    this.handleSignUpForm     = this.handleSignUpForm.bind(this)
+    this.handleAddPostForm    = this.handleAddPostForm.bind(this)
+    // form state
     this.handleLoginForm      = this.handleLoginForm.bind(this)
     this.handleInput          = this.handleInput.bind(this)
     this.handleLogin          = this.handleLogin.bind(this)
     this.handleSignUp         = this.handleSignUp.bind(this)
-    this.fetchPost            = this.fetchPost.bind(this)
-    this.handleSubmitPost     = this.handleSubmitPost.bind(this)
-    this.handleSignUpForm     = this.handleSignUpForm.bind(this)
-    this.handleAddPostForm    = this.handleAddPostForm.bind(this)
+    // form actions
     this.handleCancel         = this.handleCancel.bind(this)
     this.handleAllPostsButton = this.handleAllPostsButton.bind(this)
+    this.handleCommentForm    = this.handleCommentForm.bind(this)
     this.closeNotification    = this.closeNotification.bind(this)
     this.state = {
       loginFormActive: false,
@@ -40,13 +46,16 @@ class App extends Component {
       aboutMe: '',
       title: '',
       body: '',
+      commentBody: '',
       messageNotification: '',
       notificationActive: false,
       loggedIn: false,
       token: '',
       posts: [],
       post: {},
-      postShow: false
+      postShow: false,
+      post_id: '',
+      commentFormActive: false
     }
   }
 
@@ -54,6 +63,7 @@ class App extends Component {
     this.fetchPosts()
   }
 
+// Api requests
   fetchPosts(params={}) {
     // adjust params here or in post service
     PostService.fetchPosts(params)
@@ -75,7 +85,14 @@ class App extends Component {
   }
 
   fetchPost(e) {
-    PostService.fetchPost(e.currentTarget.id)
+    let post_id = ''
+    if(typeof(e) === 'string') {
+      post_id = e
+    } else {
+      post_id = e.currentTarget.id
+    }
+
+    PostService.fetchPost(post_id)
     .then((response) => {
       if(response.status[0] !==5) {
         return response.json()
@@ -86,7 +103,8 @@ class App extends Component {
     .then((responseJson) => {
       this.setState({
         postShow: true,
-        post: responseJson
+        post: responseJson,
+        post_id: post_id
       })
     })
     .catch((error) => {
@@ -130,10 +148,33 @@ class App extends Component {
     })
   }
 
-  handleSignUpForm() {
-    this.setState({
-      signUpFormActive: !this.state.signUpFormActive,
-      loginFormActive: false
+  handleSubmitComment() {
+    let post_id = this.state.post_id
+    CommentService.submitComment(this.state.commentBody, post_id, this.state.token)
+    .then((response) => {
+      if(response.status[0] !== 5) {
+        return response.json()
+      } else {
+        throw "The server responded with an error."
+      }
+    })
+    .then((responseJson) => {
+      if(responseJson.errors) {
+        this.setState({
+          notificationActive: true,
+          messageNotification: responseJson.errors
+        })
+      } else {
+        this.fetchPost(post_id)
+        this.setState({
+          notificationActive: true,
+          messageNotification: 'Your comment has been added!',
+          commentFormActive: false
+        })
+      }
+    })
+    .catch((error) => {
+      alert(error)
     })
   }
 
@@ -207,6 +248,14 @@ class App extends Component {
     })
   }
 
+  // functions to adjust the presence of forms
+  handleSignUpForm() {
+    this.setState({
+      signUpFormActive: !this.state.signUpFormActive,
+      loginFormActive: false
+    })
+  }
+
   handleLoginForm() {
     this.setState({
       loginFormActive: !this.state.loginFormActive,
@@ -220,27 +269,44 @@ class App extends Component {
     })
   }
 
+  handleCommentForm() {
+    this.setState({
+      commentFormActive: true
+    })
+  }
+
+  handleAllPostsButton() {
+    this.setState({
+      postShow: false,
+      commentFormActive: false
+    })
+  }
+
+  closeNotification() {
+    this.setState({
+      notificationActive: false,
+      messageNotification: ''
+    })
+  }
+
+// functions for actions of forms
   handleCancel(e) {
     let field = e.currentTarget.className
-    if(["cancelLoginMenu", "cancelSignUpMenu", "cancelAddPost"].includes(field)) {
+    if(["cancelLoginMenu", "cancelSignUpMenu", "cancelAddPost", "cancelCommentForm"].includes(field)) {
       this.setState({
         loginFormActive: false,
         signUpFormActive: false,
         addPostFormActive: false,
+        commentFormActive: false,
         firstName: '',
         lastName: '',
         email: '',
         password: '',
         title: '',
-        body: ''
+        body: '',
+        commentBody: ''
       })
     }
-  }
-
-  handleAllPostsButton() {
-    this.setState({
-      postShow: false
-    })
   }
 
   handleInput(e) {
@@ -293,8 +359,15 @@ class App extends Component {
         body: value
       })
     }
+
+    if(field === "commentFormBody") {
+      this.setState({
+        commentBody: value
+      })
+    }
   }
 
+// helper functions for render function
   returnMessage() {
     if(this.state.notificationActive) {
       return(
@@ -305,12 +378,6 @@ class App extends Component {
     } else {
       return null
     }
-  }
-
-  closeNotification() {
-    this.setState({
-      notificationActive: false
-    })
   }
 
   returnLoginForm() {
@@ -387,6 +454,12 @@ class App extends Component {
           post={this.state.post}
           opacity={opacity}
           handleAllPostsButton={this.handleAllPostsButton}
+          handleCommentForm={this.handleCommentForm}
+          commentFormActive={this.state.commentFormActive}
+          handleCancel={this.handleCancel}
+          loggedIn={this.state.loggedIn}
+          handleCommentBody={this.handleInput}
+          handleSubmitComment={this.handleSubmitComment}
         />
       )
     } else {

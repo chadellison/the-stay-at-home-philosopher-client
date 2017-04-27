@@ -14,6 +14,7 @@ export default class Posts extends Component {
               id={post.id}
               title={post.attributes.title}
               body={post.attributes.body}
+              date={post.attributes.created_at}
               author={post.relationships.author}
               fetchPost={self.props.fetchPost}
             />

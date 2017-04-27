@@ -15,7 +15,15 @@ export default class PostShow extends Component {
         <div className={'postShowAuthor'}>
           Author: {this.props.post.relationships.author}
         </div>
-        <Comments comments={this.props.post.relationships.comments} />
+        <Comments
+          comments={this.props.post.relationships.comments}
+          commentFormActive={this.props.commentFormActive}
+          handleCommentForm={this.props.handleCommentForm}
+          handleCancel={this.props.handleCancel}
+          loggedIn={this.props.loggedIn}
+          handleCommentBody={this.props.handleCommentBody}
+          handleSubmitComment={this.props.handleSubmitComment}
+        />
       </div>
     )
   }
