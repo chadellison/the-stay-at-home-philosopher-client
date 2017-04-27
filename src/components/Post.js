@@ -6,8 +6,8 @@ export default class Post extends Component {
     let text = ""
     text = field.charAt(0).toUpperCase() + field.slice(1)
 
-    if(text.length > 40) {
-      text = text.substr(0, 40) + "..."
+    if(text.length > 100) {
+      text = text.substr(0, 100) + "..."
     }
     return text
   }
