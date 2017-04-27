@@ -28,6 +28,7 @@ class App extends Component {
     this.handleAddPostForm    = this.handleAddPostForm.bind(this)
     this.handleCancel         = this.handleCancel.bind(this)
     this.handleAllPostsButton = this.handleAllPostsButton.bind(this)
+    this.handleCommentForm    = this.handleCommentForm.bind(this)
     this.closeNotification    = this.closeNotification.bind(this)
     this.state = {
       loginFormActive: false,
@@ -46,7 +47,8 @@ class App extends Component {
       token: '',
       posts: [],
       post: {},
-      postShow: false
+      postShow: false,
+      commentFormActive: false
     }
   }
 
@@ -220,13 +222,20 @@ class App extends Component {
     })
   }
 
+  handleCommentForm() {
+    this.setState({
+      commentFormActive: true
+    })
+  }
+
   handleCancel(e) {
     let field = e.currentTarget.className
-    if(["cancelLoginMenu", "cancelSignUpMenu", "cancelAddPost"].includes(field)) {
+    if(["cancelLoginMenu", "cancelSignUpMenu", "cancelAddPost", "cancelCommentForm"].includes(field)) {
       this.setState({
         loginFormActive: false,
         signUpFormActive: false,
         addPostFormActive: false,
+        commentFormActive: false,
         firstName: '',
         lastName: '',
         email: '',
@@ -239,7 +248,8 @@ class App extends Component {
 
   handleAllPostsButton() {
     this.setState({
-      postShow: false
+      postShow: false,
+      commentFormActive: false
     })
   }
 
@@ -387,6 +397,10 @@ class App extends Component {
           post={this.state.post}
           opacity={opacity}
           handleAllPostsButton={this.handleAllPostsButton}
+          handleCommentForm={this.handleCommentForm}
+          commentFormActive={this.state.commentFormActive}
+          handleCancel={this.handleCancel}
+          loggedIn={this.state.loggedIn}
         />
       )
     } else {
