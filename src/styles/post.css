@@ -26,6 +26,10 @@
   padding: 5px;
 }
 
+.postAuthor {
+  font-style: italic;
+}
+
 .postTitle:hover {
   cursor: pointer;
   color: #c62700;

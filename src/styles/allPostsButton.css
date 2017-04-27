@@ -1,0 +1,22 @@
+.allPostsButton {
+  display: inline;
+  margin: 30px;
+  font-size: 20px;
+  padding: 10px;
+  outline: none;
+  background-color: #4286f4;
+  border: none;
+  color: white;
+}
+
+.allPostsButton:hover {
+  background-color: #1155c1;
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.allPostsButton:active {
+  margin-top: 32px;
+  margin-bottom: 28px;
+}

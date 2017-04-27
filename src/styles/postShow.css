@@ -1,0 +1,21 @@
+.postShow {
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+  padding: 50px;
+  margin-top: 50px;
+}
+
+.postShowTitle {
+  padding: 20px;
+  font-size: 30px;
+}
+
+.postShowBody {
+  padding: 20px;
+  text-align: left;
+}
+
+.postShowAuthor {
+  padding: 20px;
+  text-align: left;
+  font-style: italic;
+}

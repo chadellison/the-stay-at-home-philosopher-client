@@ -18,16 +18,17 @@ import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 class App extends Component {
   constructor(props) {
     super(props)
-    this.handleLoginForm   = this.handleLoginForm.bind(this)
-    this.handleInput       = this.handleInput.bind(this)
-    this.handleLogin       = this.handleLogin.bind(this)
-    this.handleSignUp      = this.handleSignUp.bind(this)
-    this.fetchPost         = this.fetchPost.bind(this)
-    this.handleSubmitPost  = this.handleSubmitPost.bind(this)
-    this.handleSignUpForm  = this.handleSignUpForm.bind(this)
-    this.handleAddPostForm = this.handleAddPostForm.bind(this)
-    this.handleCancel      = this.handleCancel.bind(this)
-    this.closeNotification = this.closeNotification.bind(this)
+    this.handleLoginForm      = this.handleLoginForm.bind(this)
+    this.handleInput          = this.handleInput.bind(this)
+    this.handleLogin          = this.handleLogin.bind(this)
+    this.handleSignUp         = this.handleSignUp.bind(this)
+    this.fetchPost            = this.fetchPost.bind(this)
+    this.handleSubmitPost     = this.handleSubmitPost.bind(this)
+    this.handleSignUpForm     = this.handleSignUpForm.bind(this)
+    this.handleAddPostForm    = this.handleAddPostForm.bind(this)
+    this.handleCancel         = this.handleCancel.bind(this)
+    this.handleAllPostsButton = this.handleAllPostsButton.bind(this)
+    this.closeNotification    = this.closeNotification.bind(this)
     this.state = {
       loginFormActive: false,
       signUpFormActive: false,
@@ -236,6 +237,12 @@ class App extends Component {
     }
   }
 
+  handleAllPostsButton() {
+    this.setState({
+      postShow: false
+    })
+  }
+
   handleInput(e) {
     let value = e.currentTarget.value
     let field = e.currentTarget.className
@@ -364,7 +371,7 @@ class App extends Component {
   }
 
   returnAddPost(opacity) {
-    if(this.state.loggedIn && !this.state.addPostFormActive) {
+    if(this.state.loggedIn && !this.state.addPostFormActive && !this.state.postShow) {
       return(
         <AddPost opacity={opacity} handleAddPostForm={this.handleAddPostForm} />
       )
@@ -379,6 +386,7 @@ class App extends Component {
         <PostShow
           post={this.state.post}
           opacity={opacity}
+          handleAllPostsButton={this.handleAllPostsButton}
         />
       )
     } else {
