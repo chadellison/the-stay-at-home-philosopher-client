@@ -15,9 +15,15 @@ export default class Post extends Component {
   render() {
     return (
       <div className="post">
-        <div className="postTitle"><strong>Title:</strong> {this.props.title}</div>
-        <div className="postAuthor"><strong>Author:</strong> {this.props.author}</div>
-        <div className="postBody">{this.displayText(this.props.body)}</div>
+        <div className="postTitle" id={this.props.id} onClick={this.props.fetchPost}>
+          <strong>Title:</strong> {this.props.title}
+        </div>
+        <div className="postAuthor">
+          <strong>Author:</strong> {this.props.author}
+        </div>
+        <div className="postBody" id={this.props.id} onClick={this.props.fetchPost}>
+          {this.displayText(this.props.body)}
+        </div>
       </div>
     )
   }

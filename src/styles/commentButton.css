@@ -1,0 +1,22 @@
+.commentButton {
+  display: inline;
+  margin: 30px;
+  font-size: 20px;
+  padding: 10px;
+  outline: none;
+  background-color: #b70000;
+  border: none;
+  color: white;
+}
+
+.commentButton:hover {
+  background-color: #f20000;
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.commentButton:active {
+  margin-top: 32px;
+  margin-bottom: 28px;
+}
