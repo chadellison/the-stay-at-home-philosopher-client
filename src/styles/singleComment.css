@@ -1,0 +1,13 @@
+.comment {
+  background-color: #bec7d6;
+  padding: 50px;
+}
+
+.commentBody {
+  text-align: left;
+  margin-bottom: 10px;
+}
+
+.commentAuthor {
+  text-align: left;
+}
