@@ -1,11 +1,23 @@
-import API_HOST from "../config/apiHost.js"
+import API_HOST from '../config/apiHost.js'
 
 class PostService {
   fetchPosts(searchParams) {
     return(
-      fetch(API_HOST + "/api/v1/posts?" + searchParams, {
-        method: "GET",
+      fetch(API_HOST + '/api/v1/posts?' + searchParams, {
+        method: 'GET',
         headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        }
+      })
+    )
+  }
+
+  fetchPost(id) {
+    return(
+      fetch(API_HOST + '/api/v1/posts/' + id, {
+        method: 'Get',
+        header: {
           'Accept': 'application/json',
           'Content-Type': 'application/json'
         }
@@ -15,8 +27,8 @@ class PostService {
 
   addPost(title, body, token) {
     return(
-      fetch(API_HOST + "/api/v1/posts?" + "token=" + token, {
-        method: "POST",
+      fetch(API_HOST + '/api/v1/posts?' + 'token=' + token, {
+        method: 'POST',
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json'

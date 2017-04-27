@@ -12,10 +12,27 @@
   font-size: 15px;
 }
 
+.postBody:hover {
+  transition: 0.3s;
+  color: #c62700;
+  cursor: pointer;
+}
+
 .post:hover {
    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
 }
 
 .postTitle, .postBody, .postAuthor {
   padding: 5px;
+}
+
+.postTitle:hover {
+  cursor: pointer;
+  color: #c62700;
+  transition: 0.3s;
+}
+
+.postAuthor:hover {
+  cursor: pointer;
+  transition: 0.3s;
 }

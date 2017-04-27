@@ -12,6 +12,7 @@ import Header from './components/Header.js'
 import Intro from './components/Intro.js'
 import Message from './components/Message.js'
 import Posts from './components/Posts.js'
+import PostShow from './components/PostShow.js'
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 
 class App extends Component {
@@ -21,6 +22,7 @@ class App extends Component {
     this.handleInput       = this.handleInput.bind(this)
     this.handleLogin       = this.handleLogin.bind(this)
     this.handleSignUp      = this.handleSignUp.bind(this)
+    this.fetchPost         = this.fetchPost.bind(this)
     this.handleSubmitPost  = this.handleSubmitPost.bind(this)
     this.handleSignUpForm  = this.handleSignUpForm.bind(this)
     this.handleAddPostForm = this.handleAddPostForm.bind(this)
@@ -41,7 +43,9 @@ class App extends Component {
       notificationActive: false,
       loggedIn: false,
       token: '',
-      posts: []
+      posts: [],
+      post: {},
+      postShow: false
     }
   }
 
@@ -63,6 +67,59 @@ class App extends Component {
       this.setState({
         posts: responseJson.data
       })
+    })
+    .catch((error) => {
+      alert(error)
+    })
+  }
+
+  fetchPost(e) {
+    PostService.fetchPost(e.currentTarget.id)
+    .then((response) => {
+      if(response.status[0] !==5) {
+        return response.json()
+      } else {
+        throw "The server responded with an error."
+      }
+    })
+    .then((responseJson) => {
+      this.setState({
+        postShow: true,
+        post: responseJson
+      })
+    })
+    .catch((error) => {
+      alert(error)
+    })
+  }
+
+  handleSubmitPost() {
+    PostService.addPost(this.state.title, this.state.body, this.state.token)
+    .then((response) => {
+      if(response.status[0] !== 5) {
+        return response.json()
+      } else {
+        throw "The server responded with an error."
+      }
+    })
+    .then((responseJson) => {
+      this.setState({
+        notificationActive: true
+      })
+
+      if(responseJson.errors) {
+        this.setState({
+          messageNotification: responseJson.errors
+        })
+      } else {
+        let newPosts = this.state.posts
+        newPosts.unshift(responseJson)
+        this.setState({
+          posts: newPosts,
+          messageNotification: 'Your post has been added!',
+          addPostFormActive: false
+        })
+      }
     })
     .catch((error) => {
       this.setState({
@@ -138,42 +195,6 @@ class App extends Component {
           loggedIn: true,
           loginFormActive: false,
           password: ''
-        })
-      }
-    })
-    .catch((error) => {
-      this.setState({
-        notificationActive: true,
-        messageNotification: error
-      })
-    })
-  }
-
-  handleSubmitPost() {
-    PostService.addPost(this.state.title, this.state.body, this.state.token)
-    .then((response) => {
-      if (response.status[0] !== 5) {
-        return response.json()
-      } else {
-        throw "The server responded with an error."
-      }
-    })
-    .then((responseJson) => {
-      this.setState({
-        notificationActive: true
-      })
-
-      if(responseJson.errors) {
-        this.setState({
-          messageNotification: responseJson.errors
-        })
-      } else {
-        let newPosts = this.state.posts
-        newPosts.unshift(responseJson)
-        this.setState({
-          posts: newPosts,
-          messageNotification: 'Your post has been added!',
-          addPostFormActive: false
         })
       }
     })
@@ -352,13 +373,32 @@ class App extends Component {
     }
   }
 
+  returnPostOrPosts(opacity) {
+    if(this.state.postShow) {
+      return(
+        <PostShow
+          post={this.state.post}
+          opacity={opacity}
+        />
+      )
+    } else {
+      return(
+        <Posts
+          posts={this.state.posts}
+          opacity={opacity}
+          loggedIn={this.state.loggedIn}
+          fetchPost={this.fetchPost}
+        />
+      )
+    }
+  }
+
   render() {
     let opacity = ''
 
     if(this.state.loginFormActive || this.state.signUpFormActive) {
       opacity = ' opaque'
     }
-
     return (
       <div className="App">
         <Header opacity={opacity} />
@@ -397,14 +437,8 @@ class App extends Component {
         </ReactCSSTransitionGroup>
 
         {this.returnIntro(opacity)}
-
         {this.returnAddPost(opacity)}
-
-        <Posts
-          posts={this.state.posts}
-          opacity={opacity}
-          loggedIn={this.state.loggedIn}
-        />
+        {this.returnPostOrPosts(opacity)}
       </div>
     )
   }
