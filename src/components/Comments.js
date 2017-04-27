@@ -7,7 +7,12 @@ import CommentForm from './CommentForm.js'
 export default class Comments extends Component {
   returnCommentForm() {
     if(this.props.commentFormActive) {
-      return(<CommentForm handleCancel={this.props.handleCancel} />)
+      return(
+        <CommentForm
+          handleCancel={this.props.handleCancel}
+          handleCommentBody={this.props.handleCommentBody}
+        />
+      )
     } else {
       return null
     }

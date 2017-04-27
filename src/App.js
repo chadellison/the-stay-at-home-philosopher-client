@@ -41,6 +41,7 @@ class App extends Component {
       aboutMe: '',
       title: '',
       body: '',
+      commentBody: '',
       messageNotification: '',
       notificationActive: false,
       loggedIn: false,
@@ -303,6 +304,12 @@ class App extends Component {
         body: value
       })
     }
+
+    if(field === "commentFormBody") {
+      this.setState({
+        commentBody: value
+      })
+    }
   }
 
   returnMessage() {
@@ -401,6 +408,7 @@ class App extends Component {
           commentFormActive={this.state.commentFormActive}
           handleCancel={this.handleCancel}
           loggedIn={this.state.loggedIn}
+          handleCommentBody={this.handleInput}
         />
       )
     } else {
