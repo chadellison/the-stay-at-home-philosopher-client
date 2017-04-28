@@ -27,3 +27,14 @@
   font-style: italic;
   margin-left: 50px;
 }
+
+.gravatar {
+  text-align: left;
+  margin: 10px;
+  margin-right: 84%;
+}
+
+.published {
+  text-align: left;
+  margin-left: 70px;
+}

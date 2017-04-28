@@ -108,7 +108,7 @@ class App extends Component {
         postShow: true,
         post: responseJson,
         post_id: post_id,
-        comments: responseJson.relationships.comments.slice(0, 10)
+        comments: responseJson.relationships.comments.data.slice(0, 10)
       })
     })
     .catch((error) => {

@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 import "../styles/post.css"
+import Gravatar from 'react-gravatar'
+import '../styles/gravatar.css'
 
 export default class Post extends Component {
   displayText(field) {
@@ -18,13 +20,14 @@ export default class Post extends Component {
         <div className="postTitle" id={this.props.id} onClick={this.props.fetchPost}>
           <strong>Title:</strong> {this.props.title}
         </div>
+        <div className="postBody" id={this.props.id} onClick={this.props.fetchPost}>
+        {this.displayText(this.props.body)}
+        </div>
         <div className="postAuthor">
           <strong>Author:</strong> {this.props.author}
         </div>
+        <Gravatar email={this.props.email} className="gravatar"/>
         <div className="postDate">Published: {this.props.date}</div>
-        <div className="postBody" id={this.props.id} onClick={this.props.fetchPost}>
-          {this.displayText(this.props.body)}
-        </div>
       </div>
     )
   }
