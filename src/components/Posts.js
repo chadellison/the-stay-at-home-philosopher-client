@@ -8,7 +8,7 @@ export default class Posts extends Component {
     self = this
     return (
       <div className={"posts" + this.props.opacity}>
-        <PageArrows />
+        <PageArrows handlePageNumber={this.props.handlePageNumber} />
         { this.props.posts.map(function(post) {
           return (
             <Post

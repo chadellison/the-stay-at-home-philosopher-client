@@ -2,8 +2,9 @@ import API_HOST from '../config/apiHost.js'
 
 class PostService {
   fetchPosts(searchParams) {
+    let params = "page=" + searchParams.page
     return(
-      fetch(API_HOST + '/api/v1/posts?' + searchParams, {
+      fetch(API_HOST + '/api/v1/posts?' + params, {
         method: 'GET',
         headers: {
           'Accept': 'application/json',
@@ -25,7 +26,7 @@ class PostService {
     )
   }
 
-  addPost(title, body, token) {
+  addPost(params) {
     return(
       fetch(API_HOST + '/api/v1/posts?', {
         method: 'POST',
@@ -35,10 +36,10 @@ class PostService {
         },
         body: JSON.stringify({
           post: {
-            title: title,
-            body: body
+            title: params.title,
+            body: params.body
           },
-          token: token
+          token: params.token
         })
       })
     )

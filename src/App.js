@@ -30,6 +30,7 @@ class App extends Component {
     this.handleInput          = this.handleInput.bind(this)
     this.handleLogin          = this.handleLogin.bind(this)
     this.handleSignUp         = this.handleSignUp.bind(this)
+    this.handlePageNumber     = this.handlePageNumber.bind(this)
     // form actions
     this.handleCancel         = this.handleCancel.bind(this)
     this.handleAllPostsButton = this.handleAllPostsButton.bind(this)
@@ -55,17 +56,17 @@ class App extends Component {
       posts: [],
       post: {},
       postShow: false,
-      post_id: ''
+      post_id: '',
+      page: 1,
     }
   }
 
   componentWillMount() {
-    this.fetchPosts()
+    this.fetchPosts({page: this.state.page})
   }
 
 // Api requests
-  fetchPosts(params={}) {
-    // adjust params here or in post service
+  fetchPosts(params) {
     PostService.fetchPosts(params)
     .then((response) => {
       if(response.status[0] !== 5) {
@@ -113,7 +114,7 @@ class App extends Component {
   }
 
   handleSubmitPost() {
-    PostService.addPost(this.state.title, this.state.body, this.state.token)
+    PostService.addPost({title: this.state.title, body: this.state.body, token: this.state.token})
     .then((response) => {
       if(response.status[0] !== 5) {
         return response.json()
@@ -150,7 +151,7 @@ class App extends Component {
 
   handleSubmitComment() {
     let post_id = this.state.post_id
-    CommentService.submitComment(this.state.commentBody, post_id, this.state.token)
+    CommentService.submitComment({body: this.state.commentBody, id: post_id, token: this.state.token})
     .then((response) => {
       if(response.status[0] !== 5) {
         return response.json()
@@ -179,11 +180,11 @@ class App extends Component {
   }
 
   handleSignUp() {
-    SignUpService.sendSignUpCredentials(this.state.firstName,
-                                        this.state.lastName,
-                                        this.state.email,
-                                        this.state.password,
-                                        this.state.aboutMe)
+    SignUpService.sendSignUpCredentials({firstName: this.state.firstName,
+                                        lastName: this.state.lastName,
+                                        email: this.state.email,
+                                        password: this.state.password,
+                                        aboutMe: this.state.aboutMe})
     .then((response) => {
       if(response.status[0] !== 5) {
         return response.json()
@@ -217,7 +218,7 @@ class App extends Component {
   }
 
   handleLogin() {
-    LoginService.sendLoginCredentials(this.state.email, this.state.password)
+    LoginService.sendLoginCredentials({email: this.state.email, password: this.state.password})
     .then((response) => {
       if (response.status[0] !== 5) {
         return response.json()
@@ -287,6 +288,22 @@ class App extends Component {
       notificationActive: false,
       messageNotification: ''
     })
+  }
+
+  handlePageNumber(e) {
+    let arrow = e.currentTarget.className
+    let currentPage = this.state.page
+    if(arrow === "rightArrow" && this.state.posts.length === 10) {
+      currentPage += 1
+    }
+
+    if(arrow === "leftArrow" && currentPage !== 1) {
+      currentPage -= 1
+    }
+    this.setState({
+      page: currentPage
+    })
+    this.fetchPosts({page: currentPage})
   }
 
 // functions for actions of forms
@@ -469,6 +486,7 @@ class App extends Component {
           opacity={opacity}
           loggedIn={this.state.loggedIn}
           fetchPost={this.fetchPost}
+          handlePageNumber={this.handlePageNumber}
         />
       )
     }

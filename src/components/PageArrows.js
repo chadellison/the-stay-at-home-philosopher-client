@@ -7,8 +7,8 @@ export default class PageArrows extends Component {
   render() {
     return(
       <div className="pageArrows">
-        <img src={leftArrow} className="leftArrow"></img>
-        <img src={rightArrow} className="rightArrow"></img>
+        <img src={leftArrow} onClick={this.props.handlePageNumber} className="leftArrow"></img>
+        <img src={rightArrow} onClick={this.props.handlePageNumber} className="rightArrow"></img>
       </div>
     )
   }

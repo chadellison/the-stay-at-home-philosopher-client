@@ -1,7 +1,7 @@
 import API_HOST from "../config/apiHost.js"
 
 class SignUpService {
-  sendSignUpCredentials(firstName, lastName, email, password, about_me) {
+  sendSignUpCredentials(params) {
     return(
       fetch(API_HOST + "/api/v1/users", {
         method: "POST",
@@ -11,11 +11,11 @@ class SignUpService {
         },
         body: JSON.stringify({
           user: {
-            first_name: firstName,
-            last_name: lastName,
-            email: email,
-            password: password,
-            about_me: about_me
+            first_name: params.firstName,
+            last_name: params.lastName,
+            email: params.email,
+            password: params.password,
+            about_me: params.about_me
           }
         })
       })

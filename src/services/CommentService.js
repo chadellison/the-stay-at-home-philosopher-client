@@ -1,7 +1,7 @@
 import API_HOST from "../config/apiHost.js"
 
 class CommentService {
-  submitComment(body, id, token) {
+  submitComment(params) {
     return(
       fetch(API_HOST + "/api/v1/comments", {
         method: "POST",
@@ -11,10 +11,10 @@ class CommentService {
         },
         body: JSON.stringify({
           comment: {
-            body: body,
-            post_id: id
+            body: params.body,
+            post_id: params.id
           },
-          token: token
+          token: params.token
         })
       })
     )
