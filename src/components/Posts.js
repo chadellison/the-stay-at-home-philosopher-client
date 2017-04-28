@@ -22,6 +22,8 @@ export default class Posts extends Component {
             />
           )
         })}
+        <br></br><br></br>
+        <PageArrows handlePageNumber={this.props.handlePageNumber} />
       </div>
     )
   }

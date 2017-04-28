@@ -55,9 +55,11 @@ class App extends Component {
       token: '',
       posts: [],
       post: {},
+      comments: [],
       postShow: false,
       post_id: '',
       page: 1,
+      commentPage: 1
     }
   }
 
@@ -105,7 +107,8 @@ class App extends Component {
       this.setState({
         postShow: true,
         post: responseJson,
-        post_id: post_id
+        post_id: post_id,
+        comments: responseJson.relationships.comments.slice(0, 10)
       })
     })
     .catch((error) => {
@@ -166,13 +169,34 @@ class App extends Component {
           messageNotification: responseJson.errors
         })
       } else {
-        this.fetchPost(post_id)
+        let comments = this.state.comments
+        comments.push(responseJson)
         this.setState({
           notificationActive: true,
           messageNotification: 'Your comment has been added!',
-          commentFormActive: false
+          commentFormActive: false,
+          comments: comments
         })
       }
+    })
+    .catch((error) => {
+      alert(error)
+    })
+  }
+
+  fetchComments(params) {
+    CommentService.fetchComments(params)
+    .then((response) => {
+      if(response.status[0] !== 5) {
+        return response.json()
+      } else {
+        throw "The server responded with an error."
+      }
+    })
+    .then((responseJson) => {
+      this.setState({
+        comments: responseJson.data
+      })
     })
     .catch((error) => {
       alert(error)
@@ -292,18 +316,33 @@ class App extends Component {
 
   handlePageNumber(e) {
     let arrow = e.currentTarget.className
-    let currentPage = this.state.page
-    if(arrow === "rightArrow" && this.state.posts.length === 10) {
-      currentPage += 1
-    }
+    if(this.state.postShow) {
+      let page = this.state.commentPage
 
-    if(arrow === "leftArrow" && currentPage !== 1) {
-      currentPage -= 1
+      if(arrow === "rightArrow" && this.state.comments.length > 9) {
+        page += 1
+      }
+      if(arrow === "leftArrow" && page !== 1) {
+        page -= 1
+      }
+      this.setState({
+        commentPage: page
+      })
+      this.fetchComments({page: page, post_id: this.state.post_id})
+    } else {
+      let page = this.state.page
+      if(arrow === "rightArrow" && this.state.posts.length > 9) {
+        page += 1
+      }
+
+      if(arrow === "leftArrow" && page !== 1) {
+        page -= 1
+      }
+      this.setState({
+        page: page
+      })
+      this.fetchPosts({page: page})
     }
-    this.setState({
-      page: currentPage
-    })
-    this.fetchPosts({page: currentPage})
   }
 
 // functions for actions of forms
@@ -469,6 +508,7 @@ class App extends Component {
       return(
         <PostShow
           post={this.state.post}
+          comments={this.state.comments}
           opacity={opacity}
           handleAllPostsButton={this.handleAllPostsButton}
           handleCommentForm={this.handleCommentForm}
@@ -477,6 +517,7 @@ class App extends Component {
           loggedIn={this.state.loggedIn}
           handleCommentBody={this.handleInput}
           handleSubmitComment={this.handleSubmitComment}
+          handlePageNumber={this.handlePageNumber}
         />
       )
     } else {

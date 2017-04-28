@@ -19,6 +19,19 @@ class CommentService {
       })
     )
   }
+
+  fetchComments(params) {
+    let searchParams = "page=" + params.page + "&post_id=" + params.post_id
+    return(
+      fetch(API_HOST + "/api/v1/comments?" + searchParams, {
+        method: "GET",
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        }
+      })
+    )
+  }
 }
 
 export default new CommentService
