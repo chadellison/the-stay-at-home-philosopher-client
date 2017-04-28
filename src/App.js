@@ -39,6 +39,7 @@ class App extends Component {
       loginFormActive: false,
       signUpFormActive: false,
       addPostFormActive: false,
+      commentFormActive: false,
       firstName: '',
       lastName: '',
       email: '',
@@ -54,8 +55,7 @@ class App extends Component {
       posts: [],
       post: {},
       postShow: false,
-      post_id: '',
-      commentFormActive: false
+      post_id: ''
     }
   }
 
@@ -477,7 +477,7 @@ class App extends Component {
   render() {
     let opacity = ''
 
-    if(this.state.loginFormActive || this.state.signUpFormActive) {
+    if(this.state.loginFormActive || this.state.signUpFormActive || this.state.addPostFormActive) {
       opacity = ' opaque'
     }
     return (
