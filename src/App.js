@@ -21,6 +21,7 @@ class App extends Component {
     super(props)
     // api requests
     this.fetchPost            = this.fetchPost.bind(this)
+    this.fetchPosts           = this.fetchPosts.bind(this)
     this.handleSubmitPost     = this.handleSubmitPost.bind(this)
     this.handleSubmitComment  = this.handleSubmitComment.bind(this)
     this.handleSignUpForm     = this.handleSignUpForm.bind(this)
@@ -50,6 +51,7 @@ class App extends Component {
       title: '',
       body: '',
       commentBody: '',
+      search: '',
       messageNotification: '',
       notificationActive: false,
       loggedIn: false,
@@ -65,12 +67,12 @@ class App extends Component {
   }
 
   componentWillMount() {
-    this.fetchPosts({page: this.state.page})
+    this.fetchPosts()
   }
 
 // Api requests
-  fetchPosts(params) {
-    PostService.fetchPosts(params)
+  fetchPosts() {
+    PostService.fetchPosts({page: this.state.page, search: this.state.search})
     .then((response) => {
       if(response.status[0] !== 5) {
         return response.json()
@@ -349,10 +351,13 @@ class App extends Component {
       if(arrow === "leftArrow" && page !== 1) {
         page -= 1
       }
-      this.setState({
-        page: page
-      })
-      this.fetchPosts({page: page})
+      this.setState(
+        {
+          page: page
+        },
+        this.findRoutes
+      )
+      this.fetchPosts()
     }
   }
 
@@ -431,6 +436,15 @@ class App extends Component {
       this.setState({
         commentBody: value
       })
+    }
+
+    if(field === "search") {
+      this.setState({
+        search: value
+      })
+      if(value === '') {
+        this.fetchPosts()
+      }
     }
   }
 
@@ -538,7 +552,9 @@ class App extends Component {
           opacity={opacity}
           loggedIn={this.state.loggedIn}
           fetchPost={this.fetchPost}
+          fetchPosts={this.fetchPosts}
           handlePageNumber={this.handlePageNumber}
+          handleSearch={this.handleInput}
         />
       )
     }

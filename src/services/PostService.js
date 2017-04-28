@@ -2,7 +2,7 @@ import API_HOST from '../config/apiHost.js'
 
 class PostService {
   fetchPosts(searchParams) {
-    let params = "page=" + searchParams.page
+    let params = "page=" + searchParams.page + "&search=" + searchParams.search
     return(
       fetch(API_HOST + '/api/v1/posts?' + params, {
         method: 'GET',
