@@ -1,7 +1,7 @@
 import API_HOST from "../config/apiHost.js"
 
 class LoginService {
-  sendLoginCredentials(email, password) {
+  sendLoginCredentials(params) {
     return(
       fetch(API_HOST + "/api/v1/authentication", {
         method: "POST",
@@ -11,8 +11,8 @@ class LoginService {
         },
         body: JSON.stringify({
           credentials: {
-            email: email,
-            password: password
+            email: params.email,
+            password: params.password
           }
         })
       })

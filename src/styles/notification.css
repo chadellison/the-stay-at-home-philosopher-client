@@ -6,7 +6,9 @@
   padding-right: 100px;
   padding-left: 100px;
   position: fixed;
-  background-color: #cce7ff;
+  background-color: white;
+  z-index: 1;
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
 }
 
 .notificationButton {

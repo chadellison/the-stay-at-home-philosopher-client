@@ -30,6 +30,7 @@ class App extends Component {
     this.handleInput          = this.handleInput.bind(this)
     this.handleLogin          = this.handleLogin.bind(this)
     this.handleSignUp         = this.handleSignUp.bind(this)
+    this.handlePageNumber     = this.handlePageNumber.bind(this)
     // form actions
     this.handleCancel         = this.handleCancel.bind(this)
     this.handleAllPostsButton = this.handleAllPostsButton.bind(this)
@@ -54,18 +55,20 @@ class App extends Component {
       token: '',
       posts: [],
       post: {},
+      comments: [],
       postShow: false,
-      post_id: ''
+      post_id: '',
+      page: 1,
+      commentPage: 1
     }
   }
 
   componentWillMount() {
-    this.fetchPosts()
+    this.fetchPosts({page: this.state.page})
   }
 
 // Api requests
-  fetchPosts(params={}) {
-    // adjust params here or in post service
+  fetchPosts(params) {
     PostService.fetchPosts(params)
     .then((response) => {
       if(response.status[0] !== 5) {
@@ -104,7 +107,8 @@ class App extends Component {
       this.setState({
         postShow: true,
         post: responseJson,
-        post_id: post_id
+        post_id: post_id,
+        comments: responseJson.relationships.comments.slice(0, 10)
       })
     })
     .catch((error) => {
@@ -113,7 +117,7 @@ class App extends Component {
   }
 
   handleSubmitPost() {
-    PostService.addPost(this.state.title, this.state.body, this.state.token)
+    PostService.addPost({title: this.state.title, body: this.state.body, token: this.state.token})
     .then((response) => {
       if(response.status[0] !== 5) {
         return response.json()
@@ -150,7 +154,7 @@ class App extends Component {
 
   handleSubmitComment() {
     let post_id = this.state.post_id
-    CommentService.submitComment(this.state.commentBody, post_id, this.state.token)
+    CommentService.submitComment({body: this.state.commentBody, id: post_id, token: this.state.token})
     .then((response) => {
       if(response.status[0] !== 5) {
         return response.json()
@@ -165,11 +169,13 @@ class App extends Component {
           messageNotification: responseJson.errors
         })
       } else {
-        this.fetchPost(post_id)
+        let comments = this.state.comments
+        comments.push(responseJson)
         this.setState({
           notificationActive: true,
           messageNotification: 'Your comment has been added!',
-          commentFormActive: false
+          commentFormActive: false,
+          comments: comments
         })
       }
     })
@@ -178,12 +184,31 @@ class App extends Component {
     })
   }
 
+  fetchComments(params) {
+    CommentService.fetchComments(params)
+    .then((response) => {
+      if(response.status[0] !== 5) {
+        return response.json()
+      } else {
+        throw "The server responded with an error."
+      }
+    })
+    .then((responseJson) => {
+      this.setState({
+        comments: responseJson.data
+      })
+    })
+    .catch((error) => {
+      alert(error)
+    })
+  }
+
   handleSignUp() {
-    SignUpService.sendSignUpCredentials(this.state.firstName,
-                                        this.state.lastName,
-                                        this.state.email,
-                                        this.state.password,
-                                        this.state.aboutMe)
+    SignUpService.sendSignUpCredentials({firstName: this.state.firstName,
+                                        lastName: this.state.lastName,
+                                        email: this.state.email,
+                                        password: this.state.password,
+                                        aboutMe: this.state.aboutMe})
     .then((response) => {
       if(response.status[0] !== 5) {
         return response.json()
@@ -217,7 +242,7 @@ class App extends Component {
   }
 
   handleLogin() {
-    LoginService.sendLoginCredentials(this.state.email, this.state.password)
+    LoginService.sendLoginCredentials({email: this.state.email, password: this.state.password})
     .then((response) => {
       if (response.status[0] !== 5) {
         return response.json()
@@ -287,6 +312,37 @@ class App extends Component {
       notificationActive: false,
       messageNotification: ''
     })
+  }
+
+  handlePageNumber(e) {
+    let arrow = e.currentTarget.className
+    if(this.state.postShow) {
+      let page = this.state.commentPage
+
+      if(arrow === "rightArrow" && this.state.comments.length > 9) {
+        page += 1
+      }
+      if(arrow === "leftArrow" && page !== 1) {
+        page -= 1
+      }
+      this.setState({
+        commentPage: page
+      })
+      this.fetchComments({page: page, post_id: this.state.post_id})
+    } else {
+      let page = this.state.page
+      if(arrow === "rightArrow" && this.state.posts.length > 9) {
+        page += 1
+      }
+
+      if(arrow === "leftArrow" && page !== 1) {
+        page -= 1
+      }
+      this.setState({
+        page: page
+      })
+      this.fetchPosts({page: page})
+    }
   }
 
 // functions for actions of forms
@@ -452,6 +508,7 @@ class App extends Component {
       return(
         <PostShow
           post={this.state.post}
+          comments={this.state.comments}
           opacity={opacity}
           handleAllPostsButton={this.handleAllPostsButton}
           handleCommentForm={this.handleCommentForm}
@@ -460,6 +517,7 @@ class App extends Component {
           loggedIn={this.state.loggedIn}
           handleCommentBody={this.handleInput}
           handleSubmitComment={this.handleSubmitComment}
+          handlePageNumber={this.handlePageNumber}
         />
       )
     } else {
@@ -469,6 +527,7 @@ class App extends Component {
           opacity={opacity}
           loggedIn={this.state.loggedIn}
           fetchPost={this.fetchPost}
+          handlePageNumber={this.handlePageNumber}
         />
       )
     }

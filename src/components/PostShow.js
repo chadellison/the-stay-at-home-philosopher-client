@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import "../styles/postShow.css"
 import AllPostsButton from './AllPostsButton.js'
 import Comments from './Comments.js'
+import PageArrows from './PageArrows.js'
 
 export default class PostShow extends Component {
   render() {
@@ -16,7 +17,7 @@ export default class PostShow extends Component {
           Author: {this.props.post.relationships.author}
         </div>
         <Comments
-          comments={this.props.post.relationships.comments}
+          comments={this.props.comments}
           commentFormActive={this.props.commentFormActive}
           handleCommentForm={this.props.handleCommentForm}
           handleCancel={this.props.handleCancel}
@@ -24,6 +25,7 @@ export default class PostShow extends Component {
           handleCommentBody={this.props.handleCommentBody}
           handleSubmitComment={this.props.handleSubmitComment}
         />
+        <PageArrows handlePageNumber={this.props.handlePageNumber} />
       </div>
     )
   }
