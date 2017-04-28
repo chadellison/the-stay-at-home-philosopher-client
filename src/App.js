@@ -27,6 +27,7 @@ class App extends Component {
     this.handleAddPostForm    = this.handleAddPostForm.bind(this)
     // form state
     this.handleLoginForm      = this.handleLoginForm.bind(this)
+    this.handleLogout         = this.handleLogout.bind(this)
     this.handleInput          = this.handleInput.bind(this)
     this.handleLogin          = this.handleLogin.bind(this)
     this.handleSignUp         = this.handleSignUp.bind(this)
@@ -288,6 +289,16 @@ class App extends Component {
     })
   }
 
+  handleLogout() {
+    this.setState({
+      loggedIn: false,
+      email: '',
+      token: '',
+      notificationActive: true,
+      messageNotification: 'Successfully logged out.'
+    })
+  }
+
   handleAddPostForm() {
     this.setState({
       addPostFormActive: true
@@ -543,11 +554,13 @@ class App extends Component {
       <div className="App">
         <Header opacity={opacity} />
         <Nav handleLoginForm={this.handleLoginForm}
+          handleLogout={this.handleLogout}
           handleSignUpForm={this.handleSignUpForm}
           signUpFormActive={this.state.signUpFormActive}
           loginFormActive={this.state.loginFormActive}
           loggedIn={this.state.loggedIn}
           opacity={opacity}
+          email={this.state.email}
         />
 
         {this.returnMessage()}
