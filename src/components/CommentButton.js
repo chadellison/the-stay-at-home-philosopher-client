@@ -5,7 +5,7 @@ export default class CommentButton extends Component {
   render() {
     return(
       <button className="commentButton" onClick={this.props.handleCommentForm}>
-        Comment
+        Leave a Comment
       </button>
     )
   }
