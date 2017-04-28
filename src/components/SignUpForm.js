@@ -18,7 +18,7 @@ export default class SignUpForm extends Component {
         <h4 className="label">Password</h4>
         <input className="credentialPassword" type="password" onChange={this.props.handlePassword}></input>
         <h4 className="label">Description</h4>
-        <input className="credentialDescription" placeholder="About you" onChange={this.props.handleAboutMe}></input>
+        <textarea className="credentialDescription" placeholder="About you" onChange={this.props.handleAboutMe}></textarea>
         <button className="signUpSubmit" onClick={this.props.handleSignUp}>Sign Up</button>
         <button className="cancelSignUpMenu" onClick={this.props.handleCancel}>Cancel</button>
       </div>

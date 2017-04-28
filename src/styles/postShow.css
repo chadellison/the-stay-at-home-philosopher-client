@@ -3,20 +3,27 @@
   background-color: white;
   padding: 50px;
   margin-top: 50px;
+  margin-right: 100px;
+  margin-left: 100px;
 }
 
 .postShowTitle {
   padding: 20px;
   font-size: 30px;
+  margin-left: 50px;
+  margin-right: 50px;
 }
 
 .postShowBody {
   padding: 20px;
   text-align: left;
+  margin-left: 50px;
+  margin-right: 50px;
 }
 
 .postShowAuthor {
   padding: 20px;
   text-align: left;
   font-style: italic;
+  margin-left: 50px;
 }

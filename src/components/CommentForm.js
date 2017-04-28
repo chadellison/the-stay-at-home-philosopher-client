@@ -6,10 +6,10 @@ export default class CommentForm extends Component {
     return(
       <div className="commentForm">
         <h4 className="label">Leave your comment below</h4>
-        <input
+        <textarea
           className="commentFormBody"
           onChange={this.props.handleCommentBody}>
-        </input>
+        </textarea>
         <div className="commentFormButtonContainer">
           <button className="commentFormSubmit" onClick={this.props.handleSubmitComment}>Submit</button>
           <button className="cancelCommentForm" onClick={this.props.handleCancel}>Cancel</button>
