@@ -12,6 +12,7 @@
   font-size: 30px;
   margin-left: 50px;
   margin-right: 50px;
+  color: #3b435b;
 }
 
 .postShowBody {
@@ -19,6 +20,9 @@
   text-align: left;
   margin-left: 50px;
   margin-right: 50px;
+  color: #838487;
+  font-family: monospace;
+  font-size: 20px;
 }
 
 .postShowAuthor {
@@ -26,6 +30,7 @@
   text-align: left;
   font-style: italic;
   margin-left: 50px;
+  color: #838487;
 }
 
 .gravatar {
@@ -37,4 +42,6 @@
 .published {
   text-align: left;
   margin-left: 70px;
+  color: #838487;
+  margin-top: 10px;
 }
