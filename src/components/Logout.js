@@ -8,7 +8,7 @@ export default class Logout extends Component {
         <div onClick={this.props.handleLogout} className="logout">
           Logout
         </div>
-        <img className="loggedInGravater"
+        <img className="loggedInGravatar"
           src={"https://www.gravatar.com/avatar/" + this.props.hashedEmail + "?d=identicon"}>
         </img>
       </div>
