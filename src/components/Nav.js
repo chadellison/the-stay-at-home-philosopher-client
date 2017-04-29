@@ -18,7 +18,7 @@ export default class Nav extends Component {
     if(this.props.loggedIn) {
       logoutStatus = <Logout
         handleLogout={this.props.handleLogout}
-        email={this.props.email}
+        hashedEmail={this.props.hashedEmail}
       />
     }
 

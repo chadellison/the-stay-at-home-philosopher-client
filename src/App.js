@@ -48,6 +48,7 @@ class App extends Component {
       firstName: '',
       lastName: '',
       email: '',
+      hashedEmail: '',
       password: '',
       aboutMe: '',
       title: '',
@@ -241,6 +242,10 @@ class App extends Component {
         this.setState({
           signUpFormActive: false,
           messageNotification: "Your account has been created! Login to get started.",
+          firstName: '',
+          lastName: '',
+          email: '',
+          aboutMe: '',
           password: ''
         })
       }
@@ -273,6 +278,8 @@ class App extends Component {
           token: responseJson.attributes.encrypted_password,
           loggedIn: true,
           loginFormActive: false,
+          hashedEmail: responseJson.attributes.hashed_email,
+          email: '',
           password: ''
         })
       }
@@ -597,7 +604,7 @@ class App extends Component {
           loginFormActive={this.state.loginFormActive}
           loggedIn={this.state.loggedIn}
           opacity={opacity}
-          email={this.state.email}
+          hashedEmail={this.state.hashedEmail}
         />
 
         {this.returnMessage()}

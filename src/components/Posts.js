@@ -26,7 +26,7 @@ export default class Posts extends Component {
               date={post.attributes.created_at}
               author={post.relationships.author.data.name}
               aboutAuthor={post.relationships.author.data.about_me}
-              email={post.relationships.author.data.email}
+              hashedEmail={post.relationships.author.data.hashed_email}
               fetchPost={self.props.fetchPost}
               handleAuthorHover={self.props.handleAuthorHover}
               resetAuthorHover={self.props.resetAuthorHover}
