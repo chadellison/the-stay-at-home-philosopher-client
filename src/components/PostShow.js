@@ -3,7 +3,7 @@ import "../styles/postShow.css"
 import AllPostsButton from './AllPostsButton.js'
 import Comments from './Comments.js'
 import PageArrows from './PageArrows.js'
-import Gravatar from 'react-gravatar'
+import Gravatar from 'gravatar-react'
 
 export default class PostShow extends Component {
   render() {

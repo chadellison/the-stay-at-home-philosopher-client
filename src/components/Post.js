@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import "../styles/post.css"
-import Gravatar from 'react-gravatar'
+import Gravatar from 'gravatar-react'
 import UserData from './UserData.js'
 import DisplayAuthor from './DisplayAuthor.js'
 import '../styles/gravatar.css'

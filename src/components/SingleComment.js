@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import "../styles/singleComment.css"
-import Gravatar from 'react-gravatar'
+import Gravatar from 'gravatar-react'
 
 export default class SingleComment extends Component {
   render() {

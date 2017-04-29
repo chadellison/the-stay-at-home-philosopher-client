@@ -1,6 +1,6 @@
 import React, { Component } from "react"
 import "../styles/logout.css"
-import Gravatar from 'react-gravatar'
+import Gravatar from 'gravatar-react'
 
 export default class Logout extends Component {
   render() {
