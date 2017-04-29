@@ -1,9 +1,8 @@
 import React, { Component } from 'react'
 import "../styles/post.css"
-import Gravatar from './Gravatar.js'
 import UserData from './UserData.js'
 import DisplayAuthor from './DisplayAuthor.js'
-import '../styles/gravatar.css'
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 
 export default class Post extends Component {
   displayText(field) {
@@ -40,8 +39,19 @@ export default class Post extends Component {
           handleAuthorHover={this.props.handleAuthorHover}
           resetAuthorHover={this.props.resetAuthorHover}
         />
-        {userData}
-        <Gravatar hashedEmail={this.props.hashedEmail} className="gravatar" />
+        <ReactCSSTransitionGroup  transitionName="userData"
+          transitionAppear={true}
+          transitionLeave={true}
+          transitionEnterTimeout={600}
+          transitionAppearTimeout={600}
+          transitionLeaveTimeout={300}>
+          {userData}
+        </ReactCSSTransitionGroup>
+        <img className="postGravatar"
+          src={"https://www.gravatar.com/avatar/" + this.props.hashedEmail +
+          "?d=identicon"} alt="gravatar">
+        </img>
+
         <div className="postDate">Published: {this.props.date}</div>
       </div>
     )
