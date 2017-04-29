@@ -1,11 +1,6 @@
 .gravatar {
-  border-radius: 50px;
-}
-
-.comment-gravatar {
-  border-radius: 50%;
-  width: 30px;
-  height: auto;
-  float: left;
+  text-align: left;
   margin: 10px;
+  margin-right: 80%;
+  border-radius: 50px;
 }

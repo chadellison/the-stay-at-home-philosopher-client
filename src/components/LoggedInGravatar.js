@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
-import "../styles/gravatar.css"
+import "../styles/loggedInGravatar.css"
 
-export default class Gravatar extends Component {
+export default class LoggedInGravatar extends Component {
   render() {
     return (
-      <img className="gravatar"
+      <img className="loggedInGravater"
         src={"https://www.gravatar.com/avatar/" + this.props.hashedEmail + "?d=identicon"}>
       </img>
     )

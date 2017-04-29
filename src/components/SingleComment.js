@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import "../styles/singleComment.css"
-import Gravatar from './Gravatar.js'
+import '../styles/smallGravatar.css'
+import SmallGravatar from './SmallGravatar.js'
 
 export default class SingleComment extends Component {
   render() {
@@ -9,10 +10,7 @@ export default class SingleComment extends Component {
         <div className="commentBody">{this.props.body}</div>
         <div className="commentAuthor">- {this.props.author}</div>
         <div className="commentDate">Published: {this.props.date}</div>
-        <Gravatar
-          hashedEmail={this.props.hashedEmail}
-          className="comment-gravatar"
-        />
+        <SmallGravatar hashedEmail={this.props.hashedEmail} />
       </div>
     )
   }

@@ -19,7 +19,6 @@ export default class PostShow extends Component {
         </div>
         <Gravatar
           hashedEmail={this.props.post.relationships.author.data.hashed_email}
-          className="gravatar"
         />
         <div className="published">
           Published: {this.props.post.attributes.created_at}
