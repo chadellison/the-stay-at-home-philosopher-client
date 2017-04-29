@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import "../styles/post.css"
-import Gravatar from 'react-gravatar'
+import Gravatar from './Gravatar.js'
 import UserData from './UserData.js'
 import DisplayAuthor from './DisplayAuthor.js'
 import '../styles/gravatar.css'
@@ -41,7 +41,7 @@ export default class Post extends Component {
           resetAuthorHover={this.props.resetAuthorHover}
         />
         {userData}
-        <Gravatar email={this.props.email} className="gravatar" />
+        <Gravatar hashedEmail={this.props.hashedEmail} className="gravatar" />
         <div className="postDate">Published: {this.props.date}</div>
       </div>
     )

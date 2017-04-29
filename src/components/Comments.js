@@ -46,7 +46,7 @@ export default class Comments extends Component {
               key={comment.id}
               body={comment.attributes.body}
               author={comment.relationships.author.data.name}
-              email={comment.relationships.author.data.email}
+              hashedEmail={comment.relationships.author.data.hashed_email}
               date={comment.attributes.created_at}
             />
           )

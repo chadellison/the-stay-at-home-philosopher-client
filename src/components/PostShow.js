@@ -3,7 +3,7 @@ import "../styles/postShow.css"
 import AllPostsButton from './AllPostsButton.js'
 import Comments from './Comments.js'
 import PageArrows from './PageArrows.js'
-import Gravatar from 'react-gravatar'
+import Gravatar from './Gravatar.js'
 
 export default class PostShow extends Component {
   render() {
@@ -18,8 +18,7 @@ export default class PostShow extends Component {
           Author: {this.props.post.relationships.author.data.name}
         </div>
         <Gravatar
-          email={this.props.post.relationships.author.data.email}
-          className="gravatar"
+          hashedEmail={this.props.post.relationships.author.data.hashed_email}
         />
         <div className="published">
           Published: {this.props.post.attributes.created_at}
