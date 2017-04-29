@@ -33,6 +33,8 @@ class App extends Component {
     this.handleLogin          = this.handleLogin.bind(this)
     this.handleSignUp         = this.handleSignUp.bind(this)
     this.handlePageNumber     = this.handlePageNumber.bind(this)
+    this.handleGravatarId     = this.handleGravatarId.bind(this)
+    this.resetGravaterId      = this.resetGravaterId.bind(this)
     // form actions
     this.handleCancel         = this.handleCancel.bind(this)
     this.handleAllPostsButton = this.handleAllPostsButton.bind(this)
@@ -61,6 +63,7 @@ class App extends Component {
       comments: [],
       postShow: false,
       post_id: '',
+      gravatarId: '',
       page: 1,
       commentPage: 1
     }
@@ -277,6 +280,18 @@ class App extends Component {
   }
 
   // functions to adjust the presence of forms
+  handleGravatarId(e) {
+    this.setState({
+      gravatarId: e.currentTarget.id
+    })
+  }
+
+  resetGravaterId(e) {
+    this.setState({
+      gravatarId: ''
+    })
+  }
+
   handleSignUpForm() {
     this.setState({
       signUpFormActive: !this.state.signUpFormActive,
@@ -555,6 +570,9 @@ class App extends Component {
           fetchPosts={this.fetchPosts}
           handlePageNumber={this.handlePageNumber}
           handleSearch={this.handleInput}
+          handleGravatarId={this.handleGravatarId}
+          gravatarId={this.state.gravatarId}
+          resetGravaterId={this.resetGravaterId}
         />
       )
     }
