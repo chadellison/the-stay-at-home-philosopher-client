@@ -60,7 +60,7 @@
   border-radius: 0px;
   border: none;
   width: 77%;
-  background-color: #ed4b1e;
+  background-color: #ff6e26;
   color: white;
   font-size: 15px;
   transition: background-color 0.3s;
@@ -68,7 +68,7 @@
 }
 
 .cancelSignUpMenu:hover {
-  background-color: #ff6e26;
+  background-color: #ed4b1e;
   transition: background-color 0.3s;
   box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
 }

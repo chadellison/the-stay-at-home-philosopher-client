@@ -52,7 +52,7 @@
   border-radius: 0px;
   border: none;
   width: 80%;
-  background-color: #c17b0b;
+  background-color: #fcc30a;
   color: white;
   font-size: 15px;
   outline: none;
@@ -65,7 +65,7 @@
 }
 
 .submit:hover {
-  background-color: #ff9d00;
+  background-color: #edb500;
   transition: background-color 0.3s;
   box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
 }
@@ -76,7 +76,7 @@
   border-radius: 0px;
   border: none;
   width: 80%;
-  background-color: #ed4b1e;
+  background-color: #ff6e26;
   color: white;
   font-size: 15px;
   transition: background-color 0.3s;
@@ -84,7 +84,7 @@
 }
 
 .cancelLoginMenu:hover {
-  background-color: #ff6e26;
+  background-color: #ed4b1e;
   transition: background-color 0.3s;
   box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
 }

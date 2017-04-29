@@ -14,9 +14,22 @@
   font-size: 15px;
 }
 
-.postBody:hover {
+.titleText {
+  font-size: 22px;
+  display: inline-block;
+  color: #3b435b;
+  /*font-family: monospace;*/
+}
+
+.bodyText {
+  display: inline-block;
+  color: #838487;
+  font-family: monospace;
+}
+
+.bodyText:hover {
   transition: 0.3s;
-  color: #c62700;
+  color: #edb500;
   cursor: pointer;
 }
 
@@ -24,22 +37,13 @@
    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
 }
 
-.postTitle, .postBody, .postAuthor, .postDate {
+.postTitle, .postBody, .postDate {
   padding: 5px;
 }
 
-.postAuthor {
-  font-style: italic;
-}
-
-.postTitle:hover {
+.titleText:hover {
   cursor: pointer;
-  color: #c62700;
-  transition: 0.3s;
-}
-
-.postAuthor:hover {
-  cursor: pointer;
+  color: #edb500;
   transition: 0.3s;
 }
 

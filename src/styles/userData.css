@@ -1,0 +1,16 @@
+.userData {
+  margin-top: 15px;
+  margin-bottom: 10px;
+}
+
+.dataWrapper {
+  background-color: #f7f7f7;
+  display: inline-block;
+}
+
+.about {
+  margin: 5px;
+  padding: 5px;
+  font-size: 12px;
+  font-style: italic;
+}

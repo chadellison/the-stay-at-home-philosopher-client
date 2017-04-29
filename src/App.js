@@ -33,8 +33,8 @@ class App extends Component {
     this.handleLogin          = this.handleLogin.bind(this)
     this.handleSignUp         = this.handleSignUp.bind(this)
     this.handlePageNumber     = this.handlePageNumber.bind(this)
-    this.handleGravatarId     = this.handleGravatarId.bind(this)
-    this.resetGravaterId      = this.resetGravaterId.bind(this)
+    this.handleAuthorHover     = this.handleAuthorHover.bind(this)
+    this.resetAuthorHover      = this.resetAuthorHover.bind(this)
     // form actions
     this.handleCancel         = this.handleCancel.bind(this)
     this.handleAllPostsButton = this.handleAllPostsButton.bind(this)
@@ -63,7 +63,7 @@ class App extends Component {
       comments: [],
       postShow: false,
       post_id: '',
-      gravatarId: '',
+      authorPostId: '',
       page: 1,
       commentPage: 1
     }
@@ -74,8 +74,13 @@ class App extends Component {
   }
 
 // Api requests
-  fetchPosts() {
-    PostService.fetchPosts({page: this.state.page, search: this.state.search})
+  fetchPosts(params = {}) {
+    let page = 1
+    if(params.page !== undefined) {
+      page = params.page
+    }
+
+    PostService.fetchPosts({page: page, search: this.state.search})
     .then((response) => {
       if(response.status[0] !== 5) {
         return response.json()
@@ -85,7 +90,8 @@ class App extends Component {
     })
     .then((responseJson) => {
       this.setState({
-        posts: responseJson.data
+        posts: responseJson.data,
+        page: page
       })
     })
     .catch((error) => {
@@ -280,15 +286,15 @@ class App extends Component {
   }
 
   // functions to adjust the presence of forms
-  handleGravatarId(e) {
+  handleAuthorHover(e) {
     this.setState({
-      gravatarId: e.currentTarget.id
+      authorPostId: e.currentTarget.id
     })
   }
 
-  resetGravaterId(e) {
+  resetAuthorHover(e) {
     this.setState({
-      gravatarId: ''
+      authorPostId: ''
     })
   }
 
@@ -366,13 +372,10 @@ class App extends Component {
       if(arrow === "leftArrow" && page !== 1) {
         page -= 1
       }
-      this.setState(
-        {
-          page: page
-        },
-        this.findRoutes
-      )
-      this.fetchPosts()
+      this.setState({
+        page: page
+      })
+      this.fetchPosts({page: page})
     }
   }
 
@@ -570,9 +573,9 @@ class App extends Component {
           fetchPosts={this.fetchPosts}
           handlePageNumber={this.handlePageNumber}
           handleSearch={this.handleInput}
-          handleGravatarId={this.handleGravatarId}
-          gravatarId={this.state.gravatarId}
-          resetGravaterId={this.resetGravaterId}
+          handleAuthorHover={this.handleAuthorHover}
+          authorPostId={this.state.authorPostId}
+          resetAuthorHover={this.resetAuthorHover}
         />
       )
     }
