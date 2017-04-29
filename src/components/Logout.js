@@ -1,6 +1,5 @@
 import React, { Component } from "react"
 import "../styles/logout.css"
-import LoggedInGravatar from './LoggedInGravatar.js'
 
 export default class Logout extends Component {
   render() {
@@ -9,7 +8,9 @@ export default class Logout extends Component {
         <div onClick={this.props.handleLogout} className="logout">
           Logout
         </div>
-        <LoggedInGravatar hashedEmail={this.props.hashedEmail} className="loggedInGravater" />
+        <img className="loggedInGravater"
+          src={"https://www.gravatar.com/avatar/" + this.props.hashedEmail + "?d=identicon"}>
+        </img>
       </div>
     )
   }
