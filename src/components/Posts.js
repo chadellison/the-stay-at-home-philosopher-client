@@ -25,8 +25,12 @@ export default class Posts extends Component {
               body={post.attributes.body}
               date={post.attributes.created_at}
               author={post.relationships.author.data.name}
+              aboutAuthor={post.relationships.author.data.about_me}
               email={post.relationships.author.data.email}
               fetchPost={self.props.fetchPost}
+              handleAuthorHover={self.props.handleAuthorHover}
+              resetAuthorHover={self.props.resetAuthorHover}
+              authorPostId={self.props.authorPostId}
             />
           )
         })}

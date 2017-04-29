@@ -3,6 +3,11 @@
   height: 150px;
   padding: 20px;
   color: white;
+  font-size: 23px;
+}
+
+.appTitle {
+  margin-top: 5px;
 }
 
 .App-logo {

@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import "../styles/post.css"
 import Gravatar from 'react-gravatar'
+import UserData from './UserData.js'
+import DisplayAuthor from './DisplayAuthor.js'
 import '../styles/gravatar.css'
 
 export default class Post extends Component {
@@ -15,18 +17,31 @@ export default class Post extends Component {
   }
 
   render() {
+    let userData = null
+    let id = this.props.id
+    if(parseInt(this.props.authorPostId) === id) {
+      userData = <UserData
+        className="userData"
+        author={this.props.author}
+        aboutAuthor={this.props.aboutAuthor}
+      />
+    }
     return (
       <div className="post">
-        <div className="postTitle" id={this.props.id} onClick={this.props.fetchPost}>
-          <strong>Title:</strong> {this.props.title}
+        <div className="postTitle" id={id} onClick={this.props.fetchPost}>
+          <div className={"titleText"}><strong>{this.props.title}</strong></div>
         </div>
-        <div className="postBody" id={this.props.id} onClick={this.props.fetchPost}>
-        {this.displayText(this.props.body)}
+        <div className="postBody" id={id} onClick={this.props.fetchPost}>
+          <div className="bodyText">{this.displayText(this.props.body)}</div>
         </div>
-        <div className="postAuthor">
-          <strong>Author:</strong> {this.props.author}
-        </div>
-        <Gravatar email={this.props.email} className="gravatar"/>
+        <DisplayAuthor
+          id={id}
+          author={this.props.author}
+          handleAuthorHover={this.props.handleAuthorHover}
+          resetAuthorHover={this.props.resetAuthorHover}
+        />
+        {userData}
+        <Gravatar email={this.props.email} className="gravatar" />
         <div className="postDate">Published: {this.props.date}</div>
       </div>
     )

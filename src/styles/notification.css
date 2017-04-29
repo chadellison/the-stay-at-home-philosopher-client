@@ -18,7 +18,7 @@
   border-radius: 0px;
   border: none;
   width: 180px;
-  background-color: #ed4b1e;
+  background-color: #ff9d00;
   color: white;
   font-size: 15px;
   outline: none;
@@ -26,7 +26,7 @@
 }
 
 .notificationButton:hover {
-  background-color: #ff9d00;
+  background-color: #ed4b1e;
   box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
   transition: background-color 0.3s;
 }

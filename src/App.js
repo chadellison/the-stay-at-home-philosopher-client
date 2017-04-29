@@ -33,6 +33,8 @@ class App extends Component {
     this.handleLogin          = this.handleLogin.bind(this)
     this.handleSignUp         = this.handleSignUp.bind(this)
     this.handlePageNumber     = this.handlePageNumber.bind(this)
+    this.handleAuthorHover     = this.handleAuthorHover.bind(this)
+    this.resetAuthorHover      = this.resetAuthorHover.bind(this)
     // form actions
     this.handleCancel         = this.handleCancel.bind(this)
     this.handleAllPostsButton = this.handleAllPostsButton.bind(this)
@@ -61,6 +63,7 @@ class App extends Component {
       comments: [],
       postShow: false,
       post_id: '',
+      authorPostId: '',
       page: 1,
       commentPage: 1
     }
@@ -71,8 +74,13 @@ class App extends Component {
   }
 
 // Api requests
-  fetchPosts() {
-    PostService.fetchPosts({page: this.state.page, search: this.state.search})
+  fetchPosts(params = {}) {
+    let page = 1
+    if(params.page !== undefined) {
+      page = params.page
+    }
+
+    PostService.fetchPosts({page: page, search: this.state.search})
     .then((response) => {
       if(response.status[0] !== 5) {
         return response.json()
@@ -82,7 +90,8 @@ class App extends Component {
     })
     .then((responseJson) => {
       this.setState({
-        posts: responseJson.data
+        posts: responseJson.data,
+        page: page
       })
     })
     .catch((error) => {
@@ -261,7 +270,7 @@ class App extends Component {
         })
       } else {
         this.setState({
-          token: responseJson.encrypted_password,
+          token: responseJson.attributes.encrypted_password,
           loggedIn: true,
           loginFormActive: false,
           password: ''
@@ -277,6 +286,18 @@ class App extends Component {
   }
 
   // functions to adjust the presence of forms
+  handleAuthorHover(e) {
+    this.setState({
+      authorPostId: e.currentTarget.id
+    })
+  }
+
+  resetAuthorHover(e) {
+    this.setState({
+      authorPostId: ''
+    })
+  }
+
   handleSignUpForm() {
     this.setState({
       signUpFormActive: !this.state.signUpFormActive,
@@ -351,13 +372,10 @@ class App extends Component {
       if(arrow === "leftArrow" && page !== 1) {
         page -= 1
       }
-      this.setState(
-        {
-          page: page
-        },
-        this.findRoutes
-      )
-      this.fetchPosts()
+      this.setState({
+        page: page
+      })
+      this.fetchPosts({page: page})
     }
   }
 
@@ -555,6 +573,9 @@ class App extends Component {
           fetchPosts={this.fetchPosts}
           handlePageNumber={this.handlePageNumber}
           handleSearch={this.handleInput}
+          handleAuthorHover={this.handleAuthorHover}
+          authorPostId={this.state.authorPostId}
+          resetAuthorHover={this.resetAuthorHover}
         />
       )
     }
