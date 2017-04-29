@@ -7,7 +7,7 @@ export default class Header extends Component {
     return(
       <div className={"App-header" + this.props.opacity}>
         <img src={house} className="App-logo" alt="logo" />
-        <h2>The Stay at Home Philosopher</h2>
+        <h2 className="appTitle">The Stay at Home Philosopher</h2>
       </div>
     )
   }

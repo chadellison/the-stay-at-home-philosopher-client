@@ -4,10 +4,11 @@
   margin-top: 45px;
   padding-bottom: 5px;
   font-size: 20px;
+  color: #3b435b;
 }
 
 .loginStatus:hover {
-  border-bottom: 3px solid #c62700;
+  border-bottom: 3px solid #edb500;
   cursor: pointer;
-  color: #c62700;
+  color: #edb500;
 }

@@ -270,7 +270,7 @@ class App extends Component {
         })
       } else {
         this.setState({
-          token: responseJson.encrypted_password,
+          token: responseJson.attributes.encrypted_password,
           loggedIn: true,
           loginFormActive: false,
           password: ''
