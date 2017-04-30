@@ -409,11 +409,6 @@ class App extends Component {
   handleInput(e) {
     let value = e.currentTarget.value
     let field = e.currentTarget.className
-//     const formProp = FORM_FIELDS[field]
-// i    this.setState({[formProp]: value})
-//     const FORM_FIELDS = {
-//       "credentialFirstName": 'firstName'
-//     }
 
     if(field === "credentialFirstName") {
       this.setState({
