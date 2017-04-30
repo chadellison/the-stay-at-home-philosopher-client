@@ -7,6 +7,10 @@ This is the front-end React app that corresponds with the back-end [Rails API](h
 
 This Application is deployed on Heroku [here](https://the-stay-at-home-philosopher.herokuapp.com/)
 
+#### Running the App locally
+Make sure the corresponding [Rails API](https://github.com/chadellison/the_stay_at_home_philosopher) is pulled down and running on port 3001 ```rails s -p 3001```. From the root director of the React app, run ```npm install``` and then ```npm start```. You should be able to see the application on localhost:3000.
+
+
 #### Testing
 The functionality for this application is tested by the [back-end Rails API](https://github.com/chadellison/the_stay_at_home_philosopher) via Capybara Selenium specs.
 
