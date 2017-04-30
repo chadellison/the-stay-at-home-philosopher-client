@@ -3,7 +3,7 @@
 ### The Stay at Home Philosopher Client
 
 ###### Description:
-This is the front-end React app that corresponds with the back-end [Rails API](https://github.com/chadellison/the_stay_at_home_philosopher). Users can browse posts, search on posts, view next and previous pages (for posts and comments). Users can also add posts and comment on posts, but must be logged in to do so. Users Sign up through the sign up modal. Users must have a first name, last name, unique email, and password. After signing up, users can login and see additional buttons to add posts and add comments. There is a post index route and a post show route, but the page does not reload. Users can hover over other users names and see their "about data".
+This is the front-end React app that corresponds with the back-end [Rails API](https://github.com/chadellison/the_stay_at_home_philosopher). Users can browse posts, search on posts, view next and previous pages (for posts and comments). Users can also add posts and comment on posts, but must be logged in to do so. After signing up through the sign up modal (must have a first name, last name, unique email, and password), users can login and see additional buttons to add posts and add comments. There is a post index route and a post show route, but the page does not need to reload to access them. Users can hover over other users names and see their "about data".
 
 This Application is deployed on Heroku [here](https://the-stay-at-home-philosopher.herokuapp.com/)
 
