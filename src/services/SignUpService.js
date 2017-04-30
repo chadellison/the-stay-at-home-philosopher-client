@@ -15,7 +15,7 @@ class SignUpService {
             last_name: params.lastName,
             email: params.email,
             password: params.password,
-            about_me: params.about_me
+            about_me: params.aboutMe
           }
         })
       })
